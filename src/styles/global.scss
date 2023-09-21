@@ -1,0 +1,51 @@
+@import "variables.scss";
+@import "responsive.scss";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .main{
+    font-family: 'Roboto', sans-serif;
+    background-color: $main-bg;
+    color: $main-color;
+    
+  }
+
+  .container{
+    display: flex;
+    
+  }
+
+  .menuContainer{
+    width: 250px;
+    padding: 5px 20px;
+    border-right: 2px solid $soft_bg;
+    @include sm {
+      display: none;
+    }
+    
+  }
+
+  .contentContainer{
+    padding: 20px 20px;
+    width: 100%;
+    background-color: $soft_bg;
+  }
+
+  .footerContainer{
+    height: 100px;
+  }
+
+
+  .icon{
+    filter: $main-icon;
+  }
