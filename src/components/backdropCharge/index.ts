@@ -1,1 +1,1 @@
-export * from './BackdropCharge';
+export * from './CustomBackdrop.component';

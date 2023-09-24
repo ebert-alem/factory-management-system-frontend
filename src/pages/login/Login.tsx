@@ -1,4 +1,4 @@
-import { Alert, Backdrop, Box, Button, CircularProgress, Container, Grid, Paper, Snackbar, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, TextField, Typography } from '@mui/material';
 import './login.scss';
 import { useEffect, useState } from 'react';
 import { loginUser } from '../../services';
@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { createUser, resetUser, UserKey } from '../../redux/states/user';
 import { clearLocalStorage } from '../../utilities';
 import { PrivateRoutes, PublicRoutes } from '../../models';
-import { BackdropCharge } from '../../components/backdropCharge';
+import { CustomBackdropComponent } from '../../components/backdropCharge';
 import LoginIcon from '@mui/icons-material/Login';
 
 export const Login = () => {
@@ -16,7 +16,7 @@ export const Login = () => {
 		password: ''
 	})
 
-	const { BackdropLoading, setOpen } = BackdropCharge()
+	const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
 
 	useEffect(() => {
 		clearLocalStorage(UserKey);
@@ -29,7 +29,7 @@ export const Login = () => {
 
 	const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault()
-		setOpen(true)
+		handlerOpen(true)
 		login();
 	}
 
@@ -44,12 +44,12 @@ export const Login = () => {
 			console.log(result)
 			if (result) {
 				dispatch(createUser({ ...result }))
-				setOpen(false)
+				handlerOpen(false)
 				navigate(`/${PrivateRoutes.PRIVATE}`, { replace: true })
 			}
 		} catch (error) {
 			console.error(error)
-			setOpen(false)
+			handlerOpen(false)
 		}
 	}
 
@@ -99,7 +99,7 @@ export const Login = () => {
 								</Button>
 
 							</Box>
-							<BackdropLoading />
+							<CustomBackdrop />
 						</Paper>
 					</Grid>
 

@@ -15,7 +15,7 @@ const StyledToolbar = styled(Toolbar)({
 
 });
 
-const Logo = styled(Box)(({ theme }) => ({
+const Logo = styled(Box)(() => ({
     display: 'flex',
     alignItems: 'center',
     fontWeight: 'bold',
@@ -25,7 +25,7 @@ const Logo = styled(Box)(({ theme }) => ({
         height: '30px',
         objectFit: 'cover',
     }
-}))
+}));
 
 export const NavbarMaterial = () => {
 
@@ -41,7 +41,6 @@ export const NavbarMaterial = () => {
     return (
         <AppBar position="sticky">
             <StyledToolbar disableGutters>
-
                 {/* <IconButton size="small" color="default" sx={{ display: { xs: "flex", sm: "none" } }}> */}
                 <MenuRounded fontSize="large" sx={{ display: { xs: "flex", sm: "none" } }} />
                 {/* </IconButton> */}

@@ -81,24 +81,7 @@ export const menuAdmin = [
         },
       ],
     },
-    {
-      id: 5,
-      title: "Maintenance",
-      listItems: [
-        {
-          id: 1,
-          title: "Settings",
-          url: "/",
-          icon: "/setting.svg",
-        },
-        {
-          id: 2,
-          title: "Backups",
-          url: "/",
-          icon: "/backup.svg",
-        },
-      ],
-    },
+
   ];
 
   export const menuUser = [

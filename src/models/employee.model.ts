@@ -5,4 +5,5 @@ export interface EmployeeInfo {
     dni: string;
     user_id: number;
     charge_id: number;
+    //movements: Movement[];
 }
