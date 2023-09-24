@@ -69,7 +69,7 @@ const rows = [
 
 export const  Users = () => {
   
-  const { ModalUserComponent, handlerOpen } = AddUser()
+  const { ModalUser, handlerOpen } = AddUser()
 
   return (
     <div className="users">
@@ -77,7 +77,7 @@ export const  Users = () => {
         <Typography variant="h4">Usuarios</Typography>
         <Button onClick={() => handlerOpen(true)} variant="text" size="small" color="primary" startIcon={<PersonAdd />}>Nuevo usuario</Button>
       </div>
-      <ModalUserComponent />
+      <ModalUser />
       <DataTable columns={columns} rows={rows}/>
     </div>
     

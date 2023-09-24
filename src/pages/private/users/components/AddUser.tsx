@@ -1,10 +1,11 @@
 import { AddRounded, Close } from '@mui/icons-material';
-import { Box, Button, ButtonGroup, Divider, MenuItem, Modal, TextField, Typography, styled } from '@mui/material';
+import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { registerUser } from '../../../../services';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../../../redux/store';
 import { CustomBackdropComponent, CustomSelectComponent } from '../../../../components';
+import { AddCharge } from './AddCharge';
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -35,9 +36,10 @@ export const AddUser = () => {
     setOpen(value);
   }
 
-  const ModalUserComponent = () => {
+  const ModalUser = () => {
     const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
-    const { CustomSelect, selectedOption } = CustomSelectComponent({options: charges, inputLabel: 'Cargo'})
+    const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
+    const { ModalCharge, handlerOpenCharge } = AddCharge()
 
     const [loginData, setLoginData] = useState({
       userName: '',
@@ -56,13 +58,12 @@ export const AddUser = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLoginData({ ...loginData, [e.target.name]: e.target.value})
+      setLoginData({ ...loginData, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
       handlerOpen(true)
-      console.log(selectedOption)
       console.log(loginData)
       newUser()
     }
@@ -180,7 +181,7 @@ export const AddUser = () => {
             <Box>
               <CustomSelect />
             </Box>
-            <Button variant="text" size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
+            <Button variant="text" onClick={() => handlerOpenCharge(true)} size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
           </UserBox>
 
           <CustomBackdrop />
@@ -194,15 +195,16 @@ export const AddUser = () => {
               <Close />
             </Button>
           </ButtonGroup>
+          <ModalCharge />
         </Box>
       </SytledModal>
 
     )
-    
+
   }
-  //const MemoModalUser = React.memo(ModalUserComponent)
+  //const MemoModalUser = React.memo(ModalUser)
   return {
-    ModalUserComponent
+    ModalUser
     , handlerOpen
   }
 }
