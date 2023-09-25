@@ -1,11 +1,12 @@
+// import jwtDecode from "jwt-decode";
 
-const baseUrl = 'https://factory-management-system-api.onrender.com/api/user/login';
+const baseUrl = 'https://factory-management-system-api.onrender.com/api/user/';
 
 export const loginUser = async (username: string, password: string) => {
 
   try {
     const response = await fetch(
-      baseUrl,
+      baseUrl + 'login',
       {
         method: 'POST',
         headers: {
@@ -31,3 +32,34 @@ export const loginUser = async (username: string, password: string) => {
     throw error;
   }
 };
+
+export const logoutUser = async (token: string) => {
+
+  try {
+    const response = await fetch(
+      baseUrl + 'logout',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Auth-Token': token,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const data = await response;
+      console.log(data);
+    } else {
+      throw new Error('Error en la solicitud de cierre de sesión');
+    }
+  } catch (error) {
+    throw error;
+  }
+}
+
+// export const isTokenExpired = (token: string) => {
+//   const decodedToken = jwtDecode(token) as { exp: number };
+//   const expirationTime = decodedToken.exp * 1000;
+//   return Date.now() > expirationTime;
+// };
