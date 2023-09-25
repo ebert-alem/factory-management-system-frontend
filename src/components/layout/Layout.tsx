@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 import { Menu } from "../menu/Menu"
-import { Navbar } from "../navbar/Navbar"
+// import { Navbar } from "../navbar/Navbar"
 import { Footer } from "../footer/Footer"
 import { Box, Stack, ThemeProvider, createTheme } from "@mui/material"
 import { NavbarMaterial } from "./navbar/NavbarMaterial"
@@ -31,7 +31,7 @@ export const LayoutMaterial = () => {
 export const Layout = () => {
     return (
         <ThemeProvider theme={theme}>
-
+            
         <div className="main">
             <NavbarMaterial/>
             <div className="container">

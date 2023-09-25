@@ -3,7 +3,7 @@ import {DataTable} from "../../../components/dataTable/DataTable"
 import "./users.scss"
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { DeleteRounded, EditRounded, PersonAdd, RestorePageRounded } from "@mui/icons-material";
-import { AddUser } from "../../../components/add/AddUser";
+import { AddUser } from "./components/AddUser";
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 90 },
@@ -69,19 +69,17 @@ const rows = [
 
 export const  Users = () => {
   
-  const { ModalUserComponent, setOpen } = AddUser()
+  const { ModalUser, handlerOpen } = AddUser()
 
   return (
     <div className="users">
       <div className="info">
         <Typography variant="h4">Usuarios</Typography>
-        <Button onClick={() => setOpen(true)} variant="text" size="small" color="primary" startIcon={<PersonAdd />}>Nuevo usuario</Button>
+        <Button onClick={() => handlerOpen(true)} variant="text" size="small" color="primary" startIcon={<PersonAdd />}>Nuevo usuario</Button>
       </div>
-      <ModalUserComponent />
+      <ModalUser />
       <DataTable columns={columns} rows={rows}/>
     </div>
     
   )
 }
-
-export default Users

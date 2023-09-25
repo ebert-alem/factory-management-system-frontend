@@ -1,11 +1,9 @@
 import "./mateirals.scss"
 
-type Props = {}
-
-export const Materials = (props: Props) => {
+export const Materials = () => {
   return (
     <div className="materials">Materials</div>
   )
-}
+} // @ts-ignore
 
 export default Materials

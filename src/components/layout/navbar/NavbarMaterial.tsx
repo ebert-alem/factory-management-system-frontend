@@ -5,6 +5,9 @@ import { UserKey, resetUser } from "../../../redux/states/user";
 import { PublicRoutes } from '../../../models';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../../../services";
+import { useSelector } from "react-redux";
+import { AppStore } from "../../../redux/store";
 
 const StyledToolbar = styled(Toolbar)({
     paddingRight: '20px',
@@ -15,7 +18,7 @@ const StyledToolbar = styled(Toolbar)({
 
 });
 
-const Logo = styled(Box)(({ theme }) => ({
+const Logo = styled(Box)(() => ({
     display: 'flex',
     alignItems: 'center',
     fontWeight: 'bold',
@@ -25,14 +28,23 @@ const Logo = styled(Box)(({ theme }) => ({
         height: '30px',
         objectFit: 'cover',
     }
-}))
+}));
+
 
 export const NavbarMaterial = () => {
+
+    const token = useSelector((state: AppStore) => state.user.Token);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const logOut = () => {
+    const logOut = async() => {
+        try {
+            await logoutUser(token);
+        } catch (error) {
+            console.error(error);
+        }
+        
         clearLocalStorage(UserKey);
         dispatch(resetUser());
         navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
@@ -41,7 +53,6 @@ export const NavbarMaterial = () => {
     return (
         <AppBar position="sticky">
             <StyledToolbar disableGutters>
-
                 {/* <IconButton size="small" color="default" sx={{ display: { xs: "flex", sm: "none" } }}> */}
                 <MenuRounded fontSize="large" sx={{ display: { xs: "flex", sm: "none" } }} />
                 {/* </IconButton> */}

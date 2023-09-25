@@ -1,14 +1,16 @@
-import { Alert, Backdrop, Box, Button, CircularProgress, Container, Grid, Paper, Snackbar, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Paper, TextField, Typography } from '@mui/material';
 import './login.scss';
 import { useEffect, useState } from 'react';
-import { loginUser } from '../../services';
+import { loginUser, logoutUser } from '../../services';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createUser, resetUser, UserKey } from '../../redux/states/user';
 import { clearLocalStorage } from '../../utilities';
 import { PrivateRoutes, PublicRoutes } from '../../models';
-import { BackdropCharge } from '../../components/backdropCharge';
+import { CustomBackdropComponent } from '../../components/backdropCharge';
 import LoginIcon from '@mui/icons-material/Login';
+import { useSelector } from 'react-redux';
+import { AppStore } from '../../redux/store';
 
 export const Login = () => {
 	const [loginData, setLoginData] = useState({
@@ -16,20 +18,31 @@ export const Login = () => {
 		password: ''
 	})
 
-	const { BackdropLoading, setOpen } = BackdropCharge()
+	const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
+	const token = useSelector((state: AppStore) => state.user.Token);
+
 
 	useEffect(() => {
+		if(token != '')logOut();
 		clearLocalStorage(UserKey);
 		dispatch(resetUser());
 		navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
 	}, []);
+
+	const logOut = async() => {
+        try {
+            await logoutUser(token);
+        } catch (error) {
+            console.error(error);
+        }
+	}
 
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
 		e.preventDefault()
-		setOpen(true)
+		handlerOpen(true)
 		login();
 	}
 
@@ -44,12 +57,12 @@ export const Login = () => {
 			console.log(result)
 			if (result) {
 				dispatch(createUser({ ...result }))
-				setOpen(false)
+				handlerOpen(false)
 				navigate(`/${PrivateRoutes.PRIVATE}`, { replace: true })
 			}
 		} catch (error) {
 			console.error(error)
-			setOpen(false)
+			handlerOpen(false)
 		}
 	}
 
@@ -99,7 +112,7 @@ export const Login = () => {
 								</Button>
 
 							</Box>
-							<BackdropLoading />
+							<CustomBackdrop />
 						</Paper>
 					</Grid>
 

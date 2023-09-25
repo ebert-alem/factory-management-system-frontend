@@ -1,6 +1,11 @@
 import { AddRounded, Close } from '@mui/icons-material';
-import { Box, Button, ButtonGroup, Divider, FormControl, InputLabel, MenuItem, Modal, Select, SelectChangeEvent, TextField, Typography, styled } from '@mui/material';
-import React, { useState } from 'react'
+import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from '@mui/material';
+import React, { useEffect, useState } from 'react'
+import { registerUser } from '../../../../services';
+import { useSelector } from 'react-redux';
+import { AppStore } from '../../../../redux/store';
+import { CustomBackdropComponent, CustomSelectComponent } from '../../../../components';
+import { AddCharge } from './AddCharge';
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -13,28 +18,36 @@ const UserBox = styled(Box)({
   flexDirection: "column",
   gap: "1px",
   marginBottom: "20px",
-
 });
 
-const options = [
-  { value: 1, label: 'Empleado' },
-  { value: 2, label: 'Administrador' },
+// Consultar al service para obtener los cargos
+const charges = [
+  { id: "1", name: 'Empleado' },
+  { id: "2", name: 'Administrador' }
 ];
+
 
 export const AddUser = () => {
   const [open, setOpen] = React.useState(false);
 
-  //hacer funcion para abrir y cerrar el modal para no pasar directamente el setOpen
+  const token = useSelector((state: AppStore) => state.user.Token);
 
-  const ModalUserComponent = () => {
+  const handlerOpen = (value: boolean) => {
+    setOpen(value);
+  }
+
+  const ModalUser = () => {
+    const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
+    const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
+    const { ModalCharge, handlerOpenCharge } = AddCharge()
 
     const [loginData, setLoginData] = useState({
-      username: '',
+      userName: '',
       password: '',
       name: '',
-      lastname: '',
-      dni: '',
-      charge: '',
+      lastName: '',
+      DNI: '',
+      chargeId: '',
     })
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -50,17 +63,34 @@ export const AddUser = () => {
 
     const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
+      handlerOpen(true)
       console.log(loginData)
+      newUser()
+    }
+
+    useEffect(() => {
+      setLoginData({ ...loginData, chargeId: selectedOption });
+    }, [selectedOption]);
+
+    const newUser = async () => {
+      try {
+        const response = await registerUser(loginData, token)
+        console.error(response)
+      } catch (error) {
+        console.error(error)
+      }
+      handlerOpen(false)
     }
 
     return (
+
       <SytledModal
         open={open}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box
-          width={500}
+          width={{ xs: 400, md: 500 }}
           height="auto"
           bgcolor={"background.default"}
           color={"text.primary"}
@@ -69,26 +99,27 @@ export const AddUser = () => {
           display="flex"
           flexDirection="column"
           justifyContent="center"
+          component="form"
+          onSubmit={handleSubmit}
         >
           <Typography variant="h5" color="gray" textAlign="center">
             Registrar Usuario
           </Typography>
           <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />
 
-          <UserBox component="form" onSubmit={handleSubmit}>
-            
+          <UserBox >
             <Typography variant="button" textAlign="center">
               Datos de Usuario
             </Typography>
             <Box sx={{ display: 'flex', justifyContent: "space-around" }}>
               <TextField
-                name='username'
+                name='userName'
                 margin='normal'
                 label="Nombre de Usuario"
                 size='small'
                 required
                 onChange={handleInputChange}
-                value={loginData.username}
+                value={loginData.userName}
               />
               <TextField
                 name='password'
@@ -116,30 +147,31 @@ export const AddUser = () => {
                 value={loginData.name}
               />
               <TextField
-                name='lastname'
+                name='lastName'
                 size='small'
                 margin='normal'
                 label="Apellido"
                 required
                 onChange={handleInputChange}
-                value={loginData.lastname}
+                value={loginData.lastName}
               />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: "space-around" }}>
               <TextField
-                name='dni'
+                name='DNI'
                 size='small'
                 inputProps={{
-                  pattern: /^\d{7}(\d{1})?$/,
+                  pattern: "[0-9]*",
                   inputMode: 'numeric',
                   maxLength: 8,
+                  minLength: 7
                 }}
                 margin='normal'
                 label="DNI"
                 required
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                value={loginData.dni}
+                value={loginData.DNI}
               />
             </Box>
 
@@ -147,41 +179,34 @@ export const AddUser = () => {
               Cargo del empleado
             </Typography>
             <Box>
-              <FormControl fullWidth>
-                <InputLabel id="charge">Cargo</InputLabel>
-                <Select
-                  labelId="charge"
-                  id="charge"
-                  value={loginData.charge}
-                  onChange={(e: SelectChangeEvent) => setLoginData({ ...loginData, charge: e.target.value })}
-                  label="Cargo"
-                >
-                  {options.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <CustomSelect />
             </Box>
-            <Button variant="text" size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
+            <Button variant="text" onClick={() => handlerOpenCharge(true)} size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
           </UserBox>
 
+          <CustomBackdrop />
           <ButtonGroup
             fullWidth
             variant="contained"
             aria-label="outlined primary button group"
           >
-            <Button>Registrar</Button>
+            <Button type='submit' >Registrar</Button>
             <Button onClick={() => setOpen(false)} sx={{ width: "100px" }}>
               <Close />
             </Button>
           </ButtonGroup>
+          <ModalCharge />
         </Box>
       </SytledModal>
+
     )
+
   }
-
-  return { ModalUserComponent, setOpen }
-
+  //const MemoModalUser = React.memo(ModalUser)
+  return {
+    ModalUser
+    , handlerOpen
+  }
 }
+
+
