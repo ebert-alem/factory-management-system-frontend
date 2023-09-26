@@ -1,4 +1,4 @@
-import { AddRounded, Close } from '@mui/icons-material';
+import { AddRounded, Close, RemoveRounded } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from '@mui/material';
 import { useEffect, useState } from 'react'
 import { registerUser } from '../../../../services';
@@ -21,15 +21,12 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-// Consultar al service para obtener los cargos
-// const charges = [
-//   { id: "1", name: 'Empleado' },
-//   { id: "2", name: 'Administrador' }
-// ];
+interface ModalUserProps {
+  updateUsers: () => void;
+}
 
 export const AddUser = () => {
   const [open, setOpen] = useState(false);
-  const [charges, setCharges] = useState([]);
 
   const token = useSelector((state: AppStore) => state.user.Token);
 
@@ -37,17 +34,12 @@ export const AddUser = () => {
     setOpen(value);
   }
 
-  useEffect(() => {
-    (async () => {
-      const response = await getCharges(token);
-      setCharges(response);
-    })();
-  }, []);
-
-  const ModalUser = () => {
+  const ModalUser = ({ updateUsers }: ModalUserProps) => {
     const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
-    const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
     const { ModalCharge, handlerOpenCharge } = AddCharge()
+    const [charges, setCharges] = useState([]);
+    const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
+
 
     const [loginData, setLoginData] = useState({
       userName: '',
@@ -77,6 +69,17 @@ export const AddUser = () => {
     }
 
     useEffect(() => {
+      updateCharges();
+    }, []);
+
+    const updateCharges = () => {
+      (async () => {
+        const response = await getCharges(token);
+        setCharges(response);
+      })();
+    }
+
+    useEffect(() => {
       setLoginData({ ...loginData, chargeId: Number(selectedOption) });
     }, [selectedOption]);
 
@@ -86,8 +89,11 @@ export const AddUser = () => {
         console.error(response)
       } catch (error) {
         console.error(error)
+      } finally {
+        updateUsers()
+        handlerOpen(false)
+        setOpen(false)
       }
-      handlerOpen(false)
     }
 
     return (
@@ -189,7 +195,10 @@ export const AddUser = () => {
             <Box>
               <CustomSelect />
             </Box>
-            <Button variant="text" onClick={() => handlerOpenCharge(true)} size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
+            <ButtonGroup fullWidth  >
+              <Button variant="text" onClick={() => handlerOpenCharge(true)} size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
+              {/* <Button size='small' variant='text' color="error" startIcon={<RemoveRounded />}>Quitar cargo</Button> */}
+            </ButtonGroup>
           </UserBox>
 
           <CustomBackdrop />
@@ -203,7 +212,7 @@ export const AddUser = () => {
               <Close />
             </Button>
           </ButtonGroup>
-          <ModalCharge />
+          <ModalCharge updateCharges={updateCharges} />
         </Box>
       </SytledModal>
 
@@ -212,9 +221,8 @@ export const AddUser = () => {
   }
   //const MemoModalUser = React.memo(ModalUser)
   return {
-    ModalUser, 
+    ModalUser,
     handlerOpen,
-    open    
   }
 }
 

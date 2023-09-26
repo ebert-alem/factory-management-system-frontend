@@ -55,18 +55,21 @@ const columns: GridColDef[] = [
 
 ];
 
-export const DataTableUsers = (close: boolean) => {
+export const DataTableUsers = ({ update }: { update: boolean }) => {
 
   const token = useSelector((state: AppStore) => state.user.Token);
   const [rows, setRows] = useState<EmployeeInfo[]>([]);
 
   useEffect(() => {
-    (async () => {
-      const response = await getEmployees(token);
-      setRows(transformData(response));
-      console.log(rows);
-    })();
-  }, []);
+    updateTable();
+  }, [update]);
+
+  const updateTable = async () => {
+    const response = await getEmployees(token);
+    const transformedData = transformData(response);
+    setRows(transformedData);
+    console.log(transformedData)
+  }
 
   return (
     <div>

@@ -12,28 +12,31 @@ const SytledModal = styled(Modal)({
     justifyContent: "center",
 });
 
+interface ModalChargeProps {
+    updateCharges: () => void;
+}
+
 export const AddCharge = () => {
     const [open, setOpen] = useState(false);
-    
-    
+
+
     const token = useSelector((state: AppStore) => state.user.Token);
 
     const handlerOpenCharge = (value: boolean) => {
         setOpen(value);
     }
 
-    const ModalCharge = () => {
+    const ModalCharge = ({ updateCharges }: ModalChargeProps) => {
         const [chargeName, serChargeName] = useState("");
         const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
-        const [update, setUpdate] = useState(false);
-        
+        ;
+
         const handlerSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
             e.stopPropagation()
             e.preventDefault()
             handlerOpen(true)
             console.log(chargeName)
             newCharge()
-            setUpdate(!update)
         }
 
         const newCharge = async () => {
@@ -42,8 +45,11 @@ export const AddCharge = () => {
                 console.error(response)
             } catch (error) {
                 console.error(error)
+            } finally {
+                updateCharges()
+                handlerOpen(false)
+                setOpen(false)
             }
-            handlerOpen(false)
         }
 
         return (
@@ -69,13 +75,13 @@ export const AddCharge = () => {
                     <TextField
                         name='charge'
                         label="Nombre del Cargo"
-                        margin="none"                        
+                        margin="none"
                         size='small'
                         required
                         value={chargeName}
                         onChange={(e) => serChargeName(e.target.value)}
                     />
-                    
+
                     <ButtonGroup
                         fullWidth
                         variant="contained"
@@ -94,7 +100,7 @@ export const AddCharge = () => {
             </SytledModal>
         )
     }
-    
+
     return {
         ModalCharge,
         handlerOpenCharge
