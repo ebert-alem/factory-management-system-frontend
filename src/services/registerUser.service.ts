@@ -1,5 +1,5 @@
-
-const baseUrl = "https://factory-management-system-api.onrender.com/api/user/signup";
+import { baseURL } from "../models";
+// const baseUrl = "https://factoryapi.hopto.org/api/user/signup";
 
 type UserFields = {
   userName: string,
@@ -7,13 +7,13 @@ type UserFields = {
   name: string,
   lastName: string,
   DNI: string,
-  chargeId: string,
+  chargeId: number,
 };
 
 export const registerUser = async (fields: UserFields, token: string) => {
 
   try {
-    const response = await fetch(baseUrl, {
+    const response = await fetch(baseURL + 'user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -1,11 +1,12 @@
 import { AddRounded, Close } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { registerUser } from '../../../../services';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../../../redux/store';
 import { CustomBackdropComponent, CustomSelectComponent } from '../../../../components';
 import { AddCharge } from './AddCharge';
+import { getCharges } from '../../../../services/getCharges.service';
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -21,20 +22,27 @@ const UserBox = styled(Box)({
 });
 
 // Consultar al service para obtener los cargos
-const charges = [
-  { id: "1", name: 'Empleado' },
-  { id: "2", name: 'Administrador' }
-];
-
+// const charges = [
+//   { id: "1", name: 'Empleado' },
+//   { id: "2", name: 'Administrador' }
+// ];
 
 export const AddUser = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [charges, setCharges] = useState([]);
 
   const token = useSelector((state: AppStore) => state.user.Token);
 
   const handlerOpen = (value: boolean) => {
     setOpen(value);
   }
+
+  useEffect(() => {
+    (async () => {
+      const response = await getCharges(token);
+      setCharges(response);
+    })();
+  }, []);
 
   const ModalUser = () => {
     const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
@@ -47,7 +55,7 @@ export const AddUser = () => {
       name: '',
       lastName: '',
       DNI: '',
-      chargeId: '',
+      chargeId: 0,
     })
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -69,7 +77,7 @@ export const AddUser = () => {
     }
 
     useEffect(() => {
-      setLoginData({ ...loginData, chargeId: selectedOption });
+      setLoginData({ ...loginData, chargeId: Number(selectedOption) });
     }, [selectedOption]);
 
     const newUser = async () => {
@@ -204,8 +212,9 @@ export const AddUser = () => {
   }
   //const MemoModalUser = React.memo(ModalUser)
   return {
-    ModalUser
-    , handlerOpen
+    ModalUser, 
+    handlerOpen,
+    open    
   }
 }
 

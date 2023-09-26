@@ -1,12 +1,12 @@
 // import jwtDecode from "jwt-decode";
-
-const baseUrl = 'https://factory-management-system-api.onrender.com/api/user/';
+// const baseUrl = 'https://factoryapi.hopto.org/api/user/';
+import { baseURL } from "../models";
 
 export const loginUser = async (username: string, password: string) => {
 
   try {
     const response = await fetch(
-      baseUrl + 'login',
+      baseURL + 'user/login',
       {
         method: 'POST',
         headers: {
@@ -37,7 +37,7 @@ export const logoutUser = async (token: string) => {
 
   try {
     const response = await fetch(
-      baseUrl + 'logout',
+      baseURL + 'logout',
       {
         method: 'POST',
         headers: {

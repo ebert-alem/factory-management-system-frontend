@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TextField, MenuItem } from "@mui/material";
 
 interface Option {
-  id: string;
+  id: number;
   name: string;
 }
 

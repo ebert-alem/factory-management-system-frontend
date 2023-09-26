@@ -1,8 +1,10 @@
-const baseUrl = "https://factory-management-system-api.onrender.com/api/charge";
+import { baseURL } from "../models";
+
+// const baseUrl = "https://factoryapi.hopto.org/api/charge";
 
   export const registerCharge = async (chargeName: string, token: string) => {
     try {
-      const response = await fetch(baseUrl, {
+      const response = await fetch(baseURL + 'charge', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

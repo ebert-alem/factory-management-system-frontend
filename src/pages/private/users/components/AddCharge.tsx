@@ -15,6 +15,7 @@ const SytledModal = styled(Modal)({
 export const AddCharge = () => {
     const [open, setOpen] = useState(false);
     
+    
     const token = useSelector((state: AppStore) => state.user.Token);
 
     const handlerOpenCharge = (value: boolean) => {
@@ -24,6 +25,7 @@ export const AddCharge = () => {
     const ModalCharge = () => {
         const [chargeName, serChargeName] = useState("");
         const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
+        const [update, setUpdate] = useState(false);
         
         const handlerSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
             e.stopPropagation()
@@ -31,6 +33,7 @@ export const AddCharge = () => {
             handlerOpen(true)
             console.log(chargeName)
             newCharge()
+            setUpdate(!update)
         }
 
         const newCharge = async () => {
