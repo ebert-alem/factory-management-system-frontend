@@ -9,10 +9,9 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import AuthGuard from './guards/auth.guard';
 import { PrivateRoutes, PublicRoutes } from './models';
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { RoutesWithNotFound } from './utilities';
 import { Box, CircularProgress } from '@mui/material';
-// import { isTokenExpired } from './services';
 
 
 const Login = lazy(() => import('./pages/login/Login'));
@@ -20,20 +19,7 @@ const Private = lazy(() => import('./pages/private/Private'));
 
 export const App = () => {
 
-  // const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const userString = localStorage.getItem('user');
-  //   if (userString) {
-  //     const user = JSON.parse(userString);
-  //     const token = user.Token;
-  //     if (isTokenExpired(token)) {
-  //       navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
-  //     }
-  //   }
-  // }, [navigate])
-
-
+ 
   return (
     <Suspense fallback={<Box sx={{ height: '100vh', backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center' }}><CircularProgress /></Box>}>
       <Provider store={store}>

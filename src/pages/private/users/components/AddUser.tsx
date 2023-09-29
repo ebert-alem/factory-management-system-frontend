@@ -1,11 +1,11 @@
-import { AddRounded, Close } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from '@mui/material';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { registerUser } from '../../../../services';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../../../redux/store';
 import { CustomBackdropComponent, CustomSelectComponent } from '../../../../components';
-import { AddCharge } from './AddCharge';
+import { getCharges } from '../../../../services/getCharges.service';
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -20,15 +20,12 @@ const UserBox = styled(Box)({
   marginBottom: "20px",
 });
 
-// Consultar al service para obtener los cargos
-const charges = [
-  { id: "1", name: 'Empleado' },
-  { id: "2", name: 'Administrador' }
-];
-
+interface ModalUserProps {
+  updateUsers: () => void;
+}
 
 export const AddUser = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const token = useSelector((state: AppStore) => state.user.Token);
 
@@ -36,10 +33,11 @@ export const AddUser = () => {
     setOpen(value);
   }
 
-  const ModalUser = () => {
+  const ModalUser = ({ updateUsers }: ModalUserProps) => {
     const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
+    const [charges, setCharges] = useState([]);
     const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
-    const { ModalCharge, handlerOpenCharge } = AddCharge()
+
 
     const [loginData, setLoginData] = useState({
       userName: '',
@@ -47,7 +45,7 @@ export const AddUser = () => {
       name: '',
       lastName: '',
       DNI: '',
-      chargeId: '',
+      chargeId: 0,
     })
 
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -69,7 +67,18 @@ export const AddUser = () => {
     }
 
     useEffect(() => {
-      setLoginData({ ...loginData, chargeId: selectedOption });
+      updateCharges();
+    }, []);
+
+    const updateCharges = () => {
+      (async () => {
+        const response = await getCharges(token);
+        setCharges(response);
+      })();
+    }
+
+    useEffect(() => {
+      setLoginData({ ...loginData, chargeId: Number(selectedOption) });
     }, [selectedOption]);
 
     const newUser = async () => {
@@ -78,8 +87,11 @@ export const AddUser = () => {
         console.error(response)
       } catch (error) {
         console.error(error)
+      } finally {
+        updateUsers()
+        handlerOpen(false)
+        setOpen(false)
       }
-      handlerOpen(false)
     }
 
     return (
@@ -117,6 +129,10 @@ export const AddUser = () => {
                 margin='normal'
                 label="Nombre de Usuario"
                 size='small'
+                inputProps={{
+                  minLength: 5,
+                  maxLength: 20
+                }}
                 required
                 onChange={handleInputChange}
                 value={loginData.userName}
@@ -124,6 +140,10 @@ export const AddUser = () => {
               <TextField
                 name='password'
                 type='password'
+                inputProps={{
+                  minLength: 5,
+                  maxLength: 20
+                }}
                 size='small'
                 margin='normal'
                 label="Contraseña"
@@ -140,6 +160,9 @@ export const AddUser = () => {
               <TextField
                 name='name'
                 size='small'
+                inputProps={{
+                  maxLength: 20
+                }}
                 margin='normal'
                 label="Nombre"
                 required
@@ -148,6 +171,9 @@ export const AddUser = () => {
               />
               <TextField
                 name='lastName'
+                inputProps={{
+                  maxLength: 20
+                }}
                 size='small'
                 margin='normal'
                 label="Apellido"
@@ -181,7 +207,6 @@ export const AddUser = () => {
             <Box>
               <CustomSelect />
             </Box>
-            <Button variant="text" onClick={() => handlerOpenCharge(true)} size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
           </UserBox>
 
           <CustomBackdrop />
@@ -195,7 +220,6 @@ export const AddUser = () => {
               <Close />
             </Button>
           </ButtonGroup>
-          <ModalCharge />
         </Box>
       </SytledModal>
 
@@ -204,8 +228,8 @@ export const AddUser = () => {
   }
   //const MemoModalUser = React.memo(ModalUser)
   return {
-    ModalUser
-    , handlerOpen
+    ModalUser,
+    handlerOpen,
   }
 }
 

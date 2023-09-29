@@ -3,3 +3,9 @@ export interface UserInfo {
     EmployeeId: number;
     Charge: string;
 }
+
+export interface User {
+    id: number;
+    userName: string;
+    inactive: boolean;
+}

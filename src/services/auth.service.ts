@@ -1,12 +1,12 @@
-// import jwtDecode from "jwt-decode";
-
-const baseUrl = 'https://factory-management-system-api.onrender.com/api/user/';
+import jwtDecode from "jwt-decode";
+// const baseUrl = 'https://factoryapi.hopto.org/api/user/';
+import { baseURL } from "../models";
 
 export const loginUser = async (username: string, password: string) => {
 
   try {
     const response = await fetch(
-      baseUrl + 'login',
+      baseURL + 'user/login',
       {
         method: 'POST',
         headers: {
@@ -37,7 +37,7 @@ export const logoutUser = async (token: string) => {
 
   try {
     const response = await fetch(
-      baseUrl + 'logout',
+      baseURL + 'logout',
       {
         method: 'POST',
         headers: {
@@ -58,8 +58,10 @@ export const logoutUser = async (token: string) => {
   }
 }
 
-// export const isTokenExpired = (token: string) => {
-//   const decodedToken = jwtDecode(token) as { exp: number };
-//   const expirationTime = decodedToken.exp * 1000;
-//   return Date.now() > expirationTime;
-// };
+export const isTokenExpired = (token: string) => {
+  const decodedToken = jwtDecode(token) as { exp: number };
+  console.log(decodedToken);
+  const expirationTime = decodedToken.exp * 1000;
+  console.log(expirationTime);
+  return Date.now() > expirationTime;
+};
