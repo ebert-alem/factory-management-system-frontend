@@ -1,5 +1,5 @@
 import { MenuRounded } from "@mui/icons-material";
-import { AppBar, Avatar, Box, IconButton, Toolbar, Typography, styled } from "@mui/material"
+import { AppBar, Avatar, Box, IconButton, Menu, MenuItem, Toolbar, Typography, styled } from "@mui/material"
 import { clearLocalStorage } from "../../../utilities";
 import { UserKey, resetUser } from "../../../redux/states/user";
 import { PublicRoutes } from '../../../models';
@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../../services";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../redux/store";
+import { useState } from "react";
 
 const StyledToolbar = styled(Toolbar)({
     paddingRight: '20px',
@@ -38,17 +39,30 @@ export const NavbarMaterial = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const logOut = async() => {
+    const logOut = async () => {
         try {
             await logoutUser(token);
         } catch (error) {
             console.error(error);
         }
-        
+
         clearLocalStorage(UserKey);
         dispatch(resetUser());
         navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
+        handleClose();
     }
+
+    const [anchorEl, setAnchorEl] = useState
+    <null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+
 
     return (
         <AppBar position="sticky">
@@ -65,9 +79,21 @@ export const NavbarMaterial = () => {
                     </Typography>
                 </Logo>
 
-                <IconButton onClick={logOut}>
+                <IconButton onClick={handleClick}>
                     <Avatar sx={{ backgroundColor: "#3c72ff", width: 30, height: 30 }} />
                 </IconButton>
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    <MenuItem onClick={handleClose}>Perfil</MenuItem>
+                    <MenuItem onClick={logOut}>Cerrar sesión</MenuItem>
+                </Menu>
 
             </StyledToolbar>
         </AppBar>

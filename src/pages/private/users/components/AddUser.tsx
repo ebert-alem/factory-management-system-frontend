@@ -1,11 +1,10 @@
-import { AddRounded, Close, RemoveRounded } from '@mui/icons-material';
+import { Close } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from '@mui/material';
 import { useEffect, useState } from 'react'
 import { registerUser } from '../../../../services';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../../../redux/store';
 import { CustomBackdropComponent, CustomSelectComponent } from '../../../../components';
-import { AddCharge } from './AddCharge';
 import { getCharges } from '../../../../services/getCharges.service';
 
 const SytledModal = styled(Modal)({
@@ -36,7 +35,6 @@ export const AddUser = () => {
 
   const ModalUser = ({ updateUsers }: ModalUserProps) => {
     const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
-    const { ModalCharge, handlerOpenCharge } = AddCharge()
     const [charges, setCharges] = useState([]);
     const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
 
@@ -131,6 +129,10 @@ export const AddUser = () => {
                 margin='normal'
                 label="Nombre de Usuario"
                 size='small'
+                inputProps={{
+                  minLength: 5,
+                  maxLength: 20
+                }}
                 required
                 onChange={handleInputChange}
                 value={loginData.userName}
@@ -138,6 +140,10 @@ export const AddUser = () => {
               <TextField
                 name='password'
                 type='password'
+                inputProps={{
+                  minLength: 5,
+                  maxLength: 20
+                }}
                 size='small'
                 margin='normal'
                 label="Contraseña"
@@ -154,6 +160,9 @@ export const AddUser = () => {
               <TextField
                 name='name'
                 size='small'
+                inputProps={{
+                  maxLength: 20
+                }}
                 margin='normal'
                 label="Nombre"
                 required
@@ -162,6 +171,9 @@ export const AddUser = () => {
               />
               <TextField
                 name='lastName'
+                inputProps={{
+                  maxLength: 20
+                }}
                 size='small'
                 margin='normal'
                 label="Apellido"
@@ -195,10 +207,6 @@ export const AddUser = () => {
             <Box>
               <CustomSelect />
             </Box>
-            <ButtonGroup fullWidth  >
-              <Button variant="text" onClick={() => handlerOpenCharge(true)} size="small" color="primary" startIcon={<AddRounded />}>Agregar Cargo</Button>
-              {/* <Button size='small' variant='text' color="error" startIcon={<RemoveRounded />}>Quitar cargo</Button> */}
-            </ButtonGroup>
           </UserBox>
 
           <CustomBackdrop />
@@ -212,7 +220,6 @@ export const AddUser = () => {
               <Close />
             </Button>
           </ButtonGroup>
-          <ModalCharge updateCharges={updateCharges} />
         </Box>
       </SytledModal>
 

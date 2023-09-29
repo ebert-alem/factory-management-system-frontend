@@ -1,4 +1,4 @@
-// import jwtDecode from "jwt-decode";
+import jwtDecode from "jwt-decode";
 // const baseUrl = 'https://factoryapi.hopto.org/api/user/';
 import { baseURL } from "../models";
 
@@ -58,8 +58,10 @@ export const logoutUser = async (token: string) => {
   }
 }
 
-// export const isTokenExpired = (token: string) => {
-//   const decodedToken = jwtDecode(token) as { exp: number };
-//   const expirationTime = decodedToken.exp * 1000;
-//   return Date.now() > expirationTime;
-// };
+export const isTokenExpired = (token: string) => {
+  const decodedToken = jwtDecode(token) as { exp: number };
+  console.log(decodedToken);
+  const expirationTime = decodedToken.exp * 1000;
+  console.log(expirationTime);
+  return Date.now() > expirationTime;
+};
