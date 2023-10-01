@@ -39,7 +39,7 @@ export const AddUser = () => {
     const { CustomSelect, selectedOption } = CustomSelectComponent({ options: charges, inputLabel: 'Cargo' })
 
 
-    const [loginData, setLoginData] = useState({
+    const [userData, setUserData] = useState({
       userName: '',
       password: '',
       name: '',
@@ -56,13 +56,13 @@ export const AddUser = () => {
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setLoginData({ ...loginData, [e.target.name]: e.target.value })
+      setUserData({ ...userData, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
       handlerOpen(true)
-      console.log(loginData)
+      console.log(userData)
       newUser()
     }
 
@@ -78,12 +78,12 @@ export const AddUser = () => {
     }
 
     useEffect(() => {
-      setLoginData({ ...loginData, chargeId: Number(selectedOption) });
+      setUserData({ ...userData, chargeId: Number(selectedOption) });
     }, [selectedOption]);
 
     const newUser = async () => {
       try {
-        const response = await registerUser(loginData, token)
+        const response = await registerUser(userData, token)
         console.error(response)
       } catch (error) {
         console.error(error)
@@ -135,7 +135,7 @@ export const AddUser = () => {
                 }}
                 required
                 onChange={handleInputChange}
-                value={loginData.userName}
+                value={userData.userName}
               />
               <TextField
                 name='password'
@@ -149,7 +149,7 @@ export const AddUser = () => {
                 label="Contraseña"
                 required
                 onChange={handleInputChange}
-                value={loginData.password}
+                value={userData.password}
               />
             </Box>
 
@@ -167,7 +167,7 @@ export const AddUser = () => {
                 label="Nombre"
                 required
                 onChange={handleInputChange}
-                value={loginData.name}
+                value={userData.name}
               />
               <TextField
                 name='lastName'
@@ -179,7 +179,7 @@ export const AddUser = () => {
                 label="Apellido"
                 required
                 onChange={handleInputChange}
-                value={loginData.lastName}
+                value={userData.lastName}
               />
             </Box>
             <Box sx={{ display: 'flex', justifyContent: "space-around" }}>
@@ -197,7 +197,7 @@ export const AddUser = () => {
                 required
                 onChange={handleInputChange}
                 onKeyPress={handleKeyPress}
-                value={loginData.DNI}
+                value={userData.DNI}
               />
             </Box>
 

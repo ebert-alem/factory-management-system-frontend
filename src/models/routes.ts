@@ -7,6 +7,7 @@ export const PrivateRoutes = {
   HOME: 'Home',
   USERS: 'Users',
   MATERIALS: 'Materials',
+  TYPEOFMATERIALS: 'materialTypes',
 };
 
 export const baseURL = 'https://factoryapi.hopto.org/api/'

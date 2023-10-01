@@ -1,7 +1,7 @@
 import { Route, useNavigate } from "react-router-dom"
 import { RoutesWithNotFound } from "../../utilities"
 import { PrivateRoutes, PublicRoutes } from "../../models"
-import { Home, Materials, Users } from "."
+import { Home, Materials, MaterialTypes, Users } from "."
 import { Layout } from "../../components/layout"
 import RolGuard from "../../guards/rol.guard"
 import { useEffect } from "react"
@@ -32,7 +32,8 @@ export const Private = () => {
                 <Route path="/" element={<Home />} />
                 <Route element={<RolGuard />}>
                     <Route path={PrivateRoutes.MATERIALS} element={<Materials />} />
-                    <Route path={PrivateRoutes.USERS} element={<Users />} />                    
+                    <Route path={PrivateRoutes.USERS} element={<Users />} />
+                    <Route path={PrivateRoutes.TYPEOFMATERIALS} element={<MaterialTypes />} />                 
                 </Route>
                 <Route path="*" element={<h2>404 Not Found</h2>} />
             </Route>

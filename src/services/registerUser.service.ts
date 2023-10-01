@@ -1,5 +1,4 @@
 import { baseURL } from "../models";
-// const baseUrl = "https://factoryapi.hopto.org/api/user/signup";
 
 type UserFields = {
   userName: string,

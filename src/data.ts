@@ -24,14 +24,19 @@ export const menuAdmin = [
         icon: "/user.svg",
       },
       {
-        id: 1,
+        id: 2,
         title: "Materiales",
         url: "materials",
         icon: "/post2.svg",
       },
-
       {
-        id: 2,
+        id: 3,
+        title: "Tipos de Materiales",
+        url: "materialTypes",
+        icon: "/expand.svg",
+      },
+      {
+        id: 4,
         title: "Productos",
         url: "products",
         icon: "/product.svg",
@@ -43,7 +48,7 @@ export const menuAdmin = [
     title: "Movimientos",
     listItems: [
       {
-        id: 3,
+        id: 1,
         title: "Ingreso",
         url: "productions",
         icon: "/order.svg",
@@ -62,18 +67,18 @@ export const menuAdmin = [
     title: "Reportes",
     listItems: [
       {
-        id: 3,
+        id: 1,
         title: "Informes",
         url: "/",
         icon: "/form.svg",
       },
       {
-        id: 1,
+        id: 2,
         title: "Estadísticas",
         url: "/",
         icon: "/chart.svg",
       },
-    
+
     ],
   },
 
@@ -90,35 +95,29 @@ export const menuUser = [
         url: "/private",
         icon: "/home.svg",
       },
-      {
-        id: 2,
-        title: "Perfil",
-        url: "users/1",
-        icon: "/profile.svg",
-      },
     ],
   },
   {
     id: 3,
-    title: "Ordenes",
+    title: "Movimientos",
     listItems: [
       {
-        id: 3,
-        title: "Produccion",
+        id: 1,
+        title: "Ingreso",
         url: "productions",
         icon: "/order.svg",
       },
 
       {
         id: 2,
-        title: "Compra",
+        title: "Egreso",
         url: "buys",
         icon: "/note.svg",
       },
     ],
   },
   {
-    id: 4,
+    id: 3,
     title: "Reportes",
     listItems: [
       {
