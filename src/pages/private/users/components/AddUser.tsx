@@ -62,7 +62,7 @@ export const AddUser = () => {
     const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
       e.preventDefault()
       handlerOpen(true)
-      console.log(userData)
+      // console.log(userData)
       newUser()
     }
 

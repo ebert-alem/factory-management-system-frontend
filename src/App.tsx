@@ -18,7 +18,6 @@ const Login = lazy(() => import('./pages/login/Login'));
 const Private = lazy(() => import('./pages/private/Private'));
 
 export const App = () => {
-
  
   return (
     <Suspense fallback={<Box sx={{ height: '100vh', backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center' }}><CircularProgress /></Box>}>

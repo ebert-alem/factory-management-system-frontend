@@ -19,7 +19,7 @@ export const loginUser = async (username: string, password: string) => {
       }
     );
 
-    console.log(response);
+    // console.log(response);
 
     if (response.ok) {
       const data = await response.json();
@@ -37,7 +37,7 @@ export const logoutUser = async (token: string) => {
 
   try {
     const response = await fetch(
-      baseURL + 'logout',
+      baseURL + 'user/logout',
       {
         method: 'POST',
         headers: {
@@ -48,8 +48,7 @@ export const logoutUser = async (token: string) => {
     );
 
     if (response.ok) {
-      const data = await response;
-      console.log(data);
+      console.log("Sesión cerrada");
     } else {
       throw new Error('Error en la solicitud de cierre de sesión');
     }
@@ -60,8 +59,6 @@ export const logoutUser = async (token: string) => {
 
 export const isTokenExpired = (token: string) => {
   const decodedToken = jwtDecode(token) as { exp: number };
-  console.log(decodedToken);
   const expirationTime = decodedToken.exp * 1000;
-  console.log(expirationTime);
   return Date.now() > expirationTime;
 };

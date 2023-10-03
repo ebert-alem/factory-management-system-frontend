@@ -47,7 +47,7 @@ const columns: GridColDef[] = [
     const updateTable = async () => {
       const response = await getMaterialTypes(token);
       setRows(response);
-      console.log(response)
+      // console.log(response)
     }
   
     return (

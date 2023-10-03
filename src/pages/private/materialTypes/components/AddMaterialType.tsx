@@ -64,7 +64,7 @@ export const AddMaterialTypes = () => {
             (async () => {
                 const response = await getUnitsOfMeasurement(token);
                 setUnits(response);
-                console.log(response)
+                // console.log(response)
             })();
         }
 

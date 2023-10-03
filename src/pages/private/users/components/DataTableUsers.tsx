@@ -66,7 +66,7 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
     const response = await getEmployees(token);
     const transformedData = transformData(response);
     setRows(transformedData);
-    console.log(transformedData)
+    // console.log(transformedData)
   }
 
   return (

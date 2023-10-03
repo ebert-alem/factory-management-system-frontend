@@ -18,7 +18,7 @@ export const Private = () => {
         const user = JSON.parse(userString);
         const token = user.Token;
         const expired =isTokenExpired(token);
-        console.log(expired);
+        // console.log(expired);
         if (expired) {
           localStorage.removeItem('user');
           navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
