@@ -4,19 +4,19 @@
         background-color: white;
         padding: 20px;
         border-radius: 10px;
+        height: 450px;
         max-width: 1300px;
 
         .MuiDataGrid-toolbarContainer {
             flex-direction: row-reverse;
         }
 
-        img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-
-        }
+        // img {
+        //     width: 32px;
+        //     height: 32px;
+        //     border-radius: 50%;
+        //     object-fit: cover;
+        // }
 
         button {
             background-color: transparent;

@@ -12,7 +12,6 @@ const columns: GridColDef[] = [
     field: 'username',
     headerName: 'Usuario',
     width: 150,
-    editable: true,
   },
   {
     field: 'name',
@@ -26,7 +25,6 @@ const columns: GridColDef[] = [
     headerName: 'Dni',
     type: 'number',
     width: 110,
-    editable: true,
   },
   {
     field: 'charge',
@@ -68,7 +66,7 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
     const response = await getEmployees(token);
     const transformedData = transformData(response);
     setRows(transformedData);
-    console.log(transformedData)
+    // console.log(transformedData)
   }
 
   return (

@@ -1,7 +1,5 @@
 import { baseURL } from "../models";
 
-// const baseUrl = "https://factoryapi.hopto.org/api/charge";
-
   export const registerCharge = async (chargeName: string, token: string) => {
     try {
       const response = await fetch(baseURL + 'charge', {

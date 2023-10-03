@@ -54,7 +54,7 @@ export const Login = () => {
 		const { username, password } = loginData
 		try {
 			const result = await loginUser(username, password)
-			console.log(result)
+			
 			if (result) {
 				dispatch(createUser({ ...result }))
 				handlerOpen(false)
@@ -115,9 +115,7 @@ export const Login = () => {
 							<CustomBackdrop />
 						</Paper>
 					</Grid>
-
 				</Grid>
-
 			</Container>
 		</div>
 	)

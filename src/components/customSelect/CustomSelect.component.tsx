@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TextField, MenuItem } from "@mui/material";
 
 interface Option {
-  id: number;
+  id?: number;
   name: string;
 }
 
@@ -25,11 +25,12 @@ export const CustomSelectComponent = ({ options, inputLabel }: Props) => {
         label={inputLabel}
         value={selectedOption}
         onChange={handleOptionChange}
+        margin="normal"
         fullWidth
         required
       >
         {options.map((option) => (
-          <MenuItem key={option.id} value={option.id}>
+          <MenuItem key={option.id ? option.id : option.name} value={option.id ? option.id : option.name}>
             {option.name}
           </MenuItem>
         ))}

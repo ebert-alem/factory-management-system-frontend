@@ -1,5 +1,6 @@
 import { DataGrid, GridColDef, GridToolbar, esES } from '@mui/x-data-grid'
 import './dataTable.scss'
+import { Box } from '@mui/material'
 
 type Props = {columns: GridColDef[], rows: any[]}
 
@@ -8,7 +9,7 @@ export const DataTable = (props: Props) => {
 
 
     return (
-        <div className='dataTable'>
+        <Box className='dataTable'>
             <DataGrid
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 className='dataGrid'
@@ -29,12 +30,12 @@ export const DataTable = (props: Props) => {
                     }
                 }}
                 pageSizeOptions={[5, 10]}
-                
+                loading={props.rows.length === 0}
                 disableRowSelectionOnClick
                 disableColumnFilter
                 disableColumnSelector              
                 
             />
-        </div>
+        </Box>
     )
 }
