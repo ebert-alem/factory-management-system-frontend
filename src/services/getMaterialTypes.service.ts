@@ -1,7 +1,6 @@
 import { baseURL } from "../models";
 
 export const getMaterialTypes = async (token: string) => {
-
     try {
         const response = await fetch(baseURL + "materialType", {
             headers: {

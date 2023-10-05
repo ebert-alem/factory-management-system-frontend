@@ -1,19 +1,18 @@
 import { DeleteRounded, EditRounded } from "@mui/icons-material";
-import { GridColDef } from "@mui/x-data-grid";
+import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
 import { useEffect, useState } from "react";
-import { MaterialType } from "../../../../models";
-import { deleteMaterialType, getMaterialTypes } from "../../../../services";
+import { getMaterials } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
+import { MaterialInfo } from "../../../../models";
 
-export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
+export const DataTableMaterials = () => {
   const token = useSelector((state: AppStore) => state.user.Token);
-  const [rows, setRows] = useState<MaterialType[]>([]);
+  const [rows, setRows] = useState<MaterialInfo[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({ id: '', name: '' });
 
-  
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -23,12 +22,41 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
     {
       field: 'description',
       headerName: 'Descripción',
-      width: 350,
+      width: 250,
+    },
+    {
+      field: 'materialType',
+      headerName: 'Tipo material',
+      width: 150,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.materialType.name || ''}`,
+    },
+    {
+      field: 'stock',
+      headerName: 'Stock',
+      width: 100,
+      valueGetter: (params: GridValueGetterParams) =>
+      `${params.row.stock || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
+    },
+    {
+      field: 'repositionPoint',
+      headerName: 'Reposición',
+      width: 100,
+      valueGetter: (params: GridValueGetterParams) =>
+      `${params.row.repositionPoint || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
     },
     {
       field: 'unitOfMeasurement',
-      headerName: 'Unidad de medida',
+      headerName: 'Unidad',
       width: 150,
+      valueGetter: (params: GridValueGetterParams) =>
+      `${params.row.materialType.unitOfMeasurement.name || ''}`,
+    },
+    {
+      field: 'price',
+      headerName: 'Precio',
+      width: 100,
+      valueGetter: (params: GridValueGetterParams) =>
+      `$ ${params.row.price || ''}`,
     },
     {
       field: 'actions', headerName: 'Acción', width: 100, sortable: false, renderCell: (params) => {
@@ -50,9 +78,9 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
   }
 
   const handleDialogAccept = async() => {
-     const response = await deleteMaterialType(selectedRow.id, token);
-    updateTable()
-    console.log(response)
+    // const response = await deleteMaterialType(selectedRow.id, token);
+    // updateTable()
+    // console.log(response)
     setDialogOpen(false);
   };
 
@@ -62,12 +90,14 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
 
   useEffect(() => {
     updateTable();
-  }, [update]);
+  }, []);
 
   const updateTable = async () => {
-    const response = await getMaterialTypes(token);
-    setRows(response);
-    // console.log(response)
+    const response = await getMaterials(token);
+    if (response){
+      setRows(response);
+    } 
+    console.log(response)
   }
 
   return (

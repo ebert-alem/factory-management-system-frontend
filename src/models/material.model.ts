@@ -1,3 +1,4 @@
+import { MaterialTypeInfo } from ".";
 
 export interface Material {
     id: number;
@@ -6,5 +7,15 @@ export interface Material {
     materialTypeId: number;
     price: number;
     stock: number;
-    // repositionPoint: number;
+    repositionPoint: number;
+}
+
+export interface MaterialInfo {
+    id: number;
+    name: string;
+    description: string;
+    materialType: MaterialTypeInfo;
+    price: number;
+    stock: number;
+    repositionPoint: number;
 }
