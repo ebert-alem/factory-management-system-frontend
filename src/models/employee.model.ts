@@ -18,5 +18,5 @@ export interface EmployeeInfo {
     dni: string,
     charge: string,
     username: string,
-    active: boolean,
+    inactive: boolean,
 }

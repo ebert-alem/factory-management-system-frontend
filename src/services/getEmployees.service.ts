@@ -14,6 +14,7 @@ export const getEmployees = async (token: string) => {
 
         if (response.ok) {
             const data = await response.json();
+            console.log(data);
             return data;
         } else {
             const error = await response.json();
@@ -32,7 +33,7 @@ export const transformData = (data: Employee[]) => {
         dni: employee.dni,
         charge: employee.charge.name,
         username: employee.user.userName,
-        active: !employee.user.inactive,
+        inactive: employee.user.inactive,
     }));
 };
 

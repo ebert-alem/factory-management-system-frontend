@@ -13,7 +13,7 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({ id: '', name: '' });
 
-  
+
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -49,8 +49,8 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
     setDialogOpen(true);
   }
 
-  const handleDialogAccept = async() => {
-     const response = await deleteMaterialType(selectedRow.id, token);
+  const handleDialogAccept = async () => {
+    const response = await deleteMaterialType(selectedRow.id, token);
     updateTable()
     console.log(response)
     setDialogOpen(false);
