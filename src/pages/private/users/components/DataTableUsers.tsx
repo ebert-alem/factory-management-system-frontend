@@ -1,15 +1,15 @@
 import { useSelector } from "react-redux";
 import { AppStore } from '../../../../redux/store';
-import { disableUser, getEmployees, transformData } from "../../../../services";
+import { disableUser, getEmployees } from "../../../../services";
 import { DeleteRounded, EditRounded, RestorePageRounded } from "@mui/icons-material";
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { CustomDialog, DataTable } from "../../../../components";
 import { useEffect, useState } from "react";
-import { EmployeeInfo } from "../../../../models";
+import { Employee } from "../../../../models";
 
 export const DataTableUsers = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
-  const [rows, setRows] = useState<EmployeeInfo[]>([]);
+  const [rows, setRows] = useState<Employee[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({ id: '', name: '', inactive: false });
 
