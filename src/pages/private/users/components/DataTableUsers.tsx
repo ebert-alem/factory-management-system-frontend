@@ -18,6 +18,7 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
       field: 'username',
       headerName: 'Usuario',
       width: 150,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.user.userName || ''}`,
     },
     {
       field: 'name',
@@ -36,6 +37,7 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
       field: 'charge',
       headerName: 'Cargo',
       width: 150,
+      valueGetter: (params: GridValueGetterParams) => `${params.row.charge.name || ''}`,
     },
     {
       field: 'active',
@@ -44,16 +46,16 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
       sortable: false,
       type: 'boolean',
       editable: false,
-      valueGetter: (params: GridValueGetterParams) => params.row.inactive ? false : true,
+      valueGetter: (params: GridValueGetterParams) => params.row.user.inactive ? false : true,
     },
     {
       field: 'actions', headerName: 'Acción', width: 100, sortable: false, renderCell: (params) => {
-        const id = params.row.id;
-        const name = params.row.username;
+        const userId = params.row.user.id;
+        const userName = params.row.user.userName;
         return (
           <div className="actions">
             <button className="edit"><EditRounded /></button>
-            <button onClick={() => handleDisable(id, name, !params.row.inactive)} className="delete">{params.row.inactive ? <RestorePageRounded /> : <DeleteRounded />}</button>
+            <button onClick={() => handleDisable(userId, userName, !params.row.user.inactive)} className="delete">{params.row.user.inactive ? <RestorePageRounded /> : <DeleteRounded />}</button>
           </div>
         )
       }
@@ -66,9 +68,9 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
   }
 
   const handleDialogAccept = async () => {
-    // const response = await disableUser(selectedRow.id, selectedRow.inactive, token);
-    // updateTable()
-    // console.log(response)
+    const response = await disableUser(selectedRow.id, selectedRow.inactive, token);
+    updateTable()
+    console.log(response)
     setDialogOpen(false);
   };
 
@@ -82,8 +84,8 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
 
   const updateTable = async () => {
     const response = await getEmployees(token);
-    const transformedData = transformData(response);
-    setRows(transformedData);
+    // const transformedData = transformData(response);
+    setRows(response);
     // console.log(transformedData)
   }
 
