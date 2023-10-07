@@ -30,7 +30,7 @@
     padding: 5px 20px;
     border-right: 2px solid $soft_bg;
     @include sm {
-      display: none;
+      display: flex;
     }
     
   }

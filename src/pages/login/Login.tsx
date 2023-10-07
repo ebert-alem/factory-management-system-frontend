@@ -11,6 +11,7 @@ import { CustomBackdropComponent } from '../../components/backdropCharge';
 import LoginIcon from '@mui/icons-material/Login';
 import { useSelector } from 'react-redux';
 import { AppStore } from '../../redux/store';
+import { CustomAlert } from '../../components/customAlert';
 
 export const Login = () => {
 	const [loginData, setLoginData] = useState({
@@ -20,7 +21,12 @@ export const Login = () => {
 
 	const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
 	const token = useSelector((state: AppStore) => state.user.Token);
+	const [alert, setAlert] = useState({
+		severity: "success" | "info" | "warning" | "error",
+		isOpen: false,
+		text: '',
 
+	})
 
 	useEffect(() => {
 		if(token != '')logOut();
@@ -62,6 +68,13 @@ export const Login = () => {
 			}
 		} catch (error) {
 			console.error(error)
+			var alert = {
+				severity: 'error',
+				isOpen: true,
+				text: 'Usuario o contraseña incorrectos',
+			}
+			setAlert(alert)
+
 			handlerOpen(false)
 		}
 	}
@@ -116,6 +129,7 @@ export const Login = () => {
 						</Paper>
 					</Grid>
 				</Grid>
+				<CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { alert.isOpen = false}} />
 			</Container>
 		</div>
 	)
