@@ -5,9 +5,6 @@ import { Box } from '@mui/material'
 type Props = {columns: GridColDef[], rows: any[]}
 
 export const DataTable = (props: Props) => {
-
-
-
     return (
         <Box className='dataTable'>
             <DataGrid
