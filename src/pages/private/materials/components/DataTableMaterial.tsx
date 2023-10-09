@@ -77,6 +77,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
     setDialogOpen(true);
   }
 
+
   const handleDialogAccept = async () => {
     // const response = await deleteMaterialType(selectedRow.id, token);
     // updateTable()
@@ -97,6 +98,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
     if (response) {
       setRows(response);
     }
+
   }
 
   return (

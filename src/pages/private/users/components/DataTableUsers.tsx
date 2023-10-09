@@ -87,6 +87,7 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
     if (response) {
       setRows(response);
     }
+
   }
 
   return (
