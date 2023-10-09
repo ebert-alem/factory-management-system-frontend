@@ -26,12 +26,13 @@ export const DataTable = (props: Props) => {
                         quickFilterProps: { debounceMs: 500 },
                     }
                 }}
-                pageSizeOptions={[5, 10]}
-                loading={props.rows.length === 0}
+                pageSizeOptions={[5, 10]}                
                 disableRowSelectionOnClick
                 disableColumnFilter
-                disableColumnSelector              
-                
+                disableColumnSelector
+                disableColumnMenu
+                loading={props.rows.length === 0}
+                sx={{ minHeight: 450 }}
             />
         </Box>
     )

@@ -28,6 +28,7 @@ export const CustomSelectComponent = ({ options, inputLabel }: Props) => {
         margin="normal"
         fullWidth
         required
+        size="small"
       >
         {options.map((option) => (
           <MenuItem key={option.id ? option.id : option.name} value={option.id ? option.id : option.name}>

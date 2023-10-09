@@ -7,7 +7,7 @@ import { getMaterials } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
 import { MaterialInfo } from "../../../../models";
 
-export const DataTableMaterials = () => {
+export const DataTableMaterials = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
   const [rows, setRows] = useState<MaterialInfo[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -35,28 +35,28 @@ export const DataTableMaterials = () => {
       headerName: 'Stock',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.stock || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
+        `${params.row.stock || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
     },
     {
       field: 'repositionPoint',
       headerName: 'Reposición',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.repositionPoint || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
+        `${params.row.repositionPoint || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
     },
     {
       field: 'unitOfMeasurement',
       headerName: 'Unidad',
       width: 150,
       valueGetter: (params: GridValueGetterParams) =>
-      `${params.row.materialType.unitOfMeasurement.name || ''}`,
+        `${params.row.materialType.unitOfMeasurement.name || ''}`,
     },
     {
       field: 'price',
       headerName: 'Precio',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-      `$ ${params.row.price || ''}`,
+        `$ ${params.row.price || ''}`,
     },
     {
       field: 'actions', headerName: 'Acción', width: 100, sortable: false, renderCell: (params) => {
@@ -77,7 +77,8 @@ export const DataTableMaterials = () => {
     setDialogOpen(true);
   }
 
-  const handleDialogAccept = async() => {
+
+  const handleDialogAccept = async () => {
     // const response = await deleteMaterialType(selectedRow.id, token);
     // updateTable()
     // console.log(response)
@@ -90,14 +91,14 @@ export const DataTableMaterials = () => {
 
   useEffect(() => {
     updateTable();
-  }, []);
+  }, [update]);
 
   const updateTable = async () => {
     const response = await getMaterials(token);
-    if (response){
+    if (response) {
       setRows(response);
-    } 
-    console.log(response)
+    }
+
   }
 
   return (
