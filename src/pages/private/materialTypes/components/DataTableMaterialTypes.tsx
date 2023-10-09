@@ -13,7 +13,6 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({ id: '', name: '' });
 
-
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -66,8 +65,9 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
 
   const updateTable = async () => {
     const response = await getMaterialTypes(token);
-    setRows(response);
-    // console.log(response)
+    if (response) {
+      setRows(response);
+    }
   }
 
   return (

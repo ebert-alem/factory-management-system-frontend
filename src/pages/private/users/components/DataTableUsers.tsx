@@ -84,9 +84,9 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
 
   const updateTable = async () => {
     const response = await getEmployees(token);
-    // const transformedData = transformData(response);
-    setRows(response);
-    // console.log(transformedData)
+    if (response) {
+      setRows(response);
+    }
   }
 
   return (

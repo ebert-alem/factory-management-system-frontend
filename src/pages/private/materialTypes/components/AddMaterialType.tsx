@@ -51,6 +51,7 @@ export const AddMaterialTypes = () => {
 
         const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
             e.preventDefault()
+            
             handlerOpen(true)
             console.log(typesData)
             newTypesOfMaterials()
@@ -60,12 +61,10 @@ export const AddMaterialTypes = () => {
             updateUnitsOfMeasurement();
         }, []);
 
-        const updateUnitsOfMeasurement = () => {
-            (async () => {
-                const response = await getUnitsOfMeasurement(token);
-                setUnits(response);
-                // console.log(response)
-            })();
+        const updateUnitsOfMeasurement = async() => {        
+            const response = await getUnitsOfMeasurement(token);
+            setUnits(response);
+            // console.log(response)            
         }
 
         useEffect(() => {
@@ -117,7 +116,7 @@ export const AddMaterialTypes = () => {
                             label="Nombre tipo de material"
                             size='small'
                             inputProps={{
-                                maxLength: 20
+                                maxLength: 30
                             }}
                             required
                             onChange={handleInputChange}
