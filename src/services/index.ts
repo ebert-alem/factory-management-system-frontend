@@ -1,4 +1,5 @@
 export * from './auth.service';
+export * from './deleteMaterial.service';
 export * from './deleteMaterialType.service';
 export * from './disableUser.service';
 export * from './getCharges.service';

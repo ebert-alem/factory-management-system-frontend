@@ -3,7 +3,7 @@ import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
 import { useEffect, useState } from "react";
-import { getMaterials } from "../../../../services";
+import { deleteMaterial, getMaterials } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
 import { MaterialInfo } from "../../../../models";
 
@@ -35,14 +35,14 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
       headerName: 'Stock',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.stock || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
+        `${params.row.stock || ''} ${params.row.stock ? params.row.materialType.unitOfMeasurement.symbol : '-'}`,
     },
     {
       field: 'repositionPoint',
       headerName: 'Reposición',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.repositionPoint || ''} ${params.row.materialType.unitOfMeasurement.symbol || ''}`,
+        `${params.row.repositionPoint || ''} ${params.row.stock ? params.row.materialType.unitOfMeasurement.symbol : '-'}`,
     },
     {
       field: 'unitOfMeasurement',
@@ -56,7 +56,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
       headerName: 'Precio',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-        `$ ${params.row.price || ''}`,
+        `${params.row.price ? '$' : '-'} ${params.row.price || ''}`,
     },
     {
       field: 'actions', headerName: 'Acción', width: 100, sortable: false, renderCell: (params) => {
@@ -73,15 +73,14 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
   ];
 
   const handleDelete = (id: string, name: string) => {
-    setSelectedRow({ id, name });
+    setSelectedRow({...selectedRow, id, name });
     setDialogOpen(true);
   }
 
-
   const handleDialogAccept = async () => {
-    // const response = await deleteMaterialType(selectedRow.id, token);
-    // updateTable()
-    // console.log(response)
+    const response = await deleteMaterial(selectedRow.id, token);
+    updateTable()
+    console.log(response.message)
     setDialogOpen(false);
   };
 
