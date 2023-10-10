@@ -77,8 +77,8 @@ export const AddMaterial = () => {
                     repositionPoint: Number(materialData.repositionPoint),
                 }
 
-                const response = await registerMaterial(materialFields, token)
-                // Devuelve el objeto creado, ningun mensaje.            
+                await registerMaterial(materialFields, token)                
+                // Devuelve el objeto creado, ningun mensaje.
 
             } catch (error) {
                 console.error(error)
@@ -150,7 +150,7 @@ export const AddMaterial = () => {
                                 margin='normal'
                                 label="Precio"
                                 value={materialData.price}
-                                inputProps={{ maxLength: 8 }}
+                                inputProps={{ maxLength: 10 }}
                                 InputProps={{
                                     startAdornment:
                                         <InputAdornment position="start">$</InputAdornment>

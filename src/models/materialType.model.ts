@@ -4,7 +4,7 @@ export interface MaterialType {
     id: number;
     name: string;
     description: string;
-    unitOfMeasurement: UnitOfMeasurement;
+    unitOfMeasurement: string;
 }
 
 export interface MaterialTypeInfo {
