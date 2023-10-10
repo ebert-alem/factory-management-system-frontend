@@ -5,6 +5,7 @@ export * from './getCharges.service';
 export * from './getEmployees.service';
 export * from './getMaterialTypes.service';
 export * from './getMaterials.service';
+export * from './modifyMaterialType.service';
 export * from './registerCharge.service';
 export * from './registerMaterial.service';
 export * from './registerMaterialType.service';
