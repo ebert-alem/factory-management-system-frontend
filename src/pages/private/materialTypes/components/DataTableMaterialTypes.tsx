@@ -3,17 +3,19 @@ import { GridColDef } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
 import { useEffect, useState } from "react";
-import { TypeOfMaterial } from "../../../../models";
+import { MaterialType } from "../../../../models";
 import { deleteMaterialType, getMaterialTypes } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
+import { ModifyMaterialType } from "./ModifyMaterialType";
 
 export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
-  const [rows, setRows] = useState<TypeOfMaterial[]>([]);
+  const [rows, setRows] = useState<MaterialType[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({ id: '', name: '' });
-
+  const [selectedRow, setSelectedRow] = useState({ id: 0, name: '', description: '', unitOfMeasurement: '' });
   
+  const {ModalMaterialType, handlerOpen} = ModifyMaterialType()
+
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -34,9 +36,11 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
       field: 'actions', headerName: 'Acción', width: 100, sortable: false, renderCell: (params) => {
         const id = params.row.id;
         const name = params.row.name;
+        const description = params.row.description;
+        const unitOfMeasurement = params.row.unitOfMeasurement;
         return (
           <div className="actions">
-            <button className="edit"><EditRounded /></button>
+            <button onClick={() => handleModify(id, name, description, unitOfMeasurement)} className="edit"><EditRounded /></button>
             <button onClick={() => handleDelete(id, name)} className="delete">{<DeleteRounded />}</button>
           </div>
         )
@@ -44,13 +48,19 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
     },
   ];
 
-  const handleDelete = (id: string, name: string) => {
-    setSelectedRow({ id, name });
+
+  const handleDelete = (id: number, name: string) => {
+    setSelectedRow({...selectedRow, id, name });
     setDialogOpen(true);
   }
 
-  const handleDialogAccept = async() => {
-     const response = await deleteMaterialType(selectedRow.id, token);
+  const handleModify = (id: number, name: string, description: string, unitOfMeasurement: string) => {
+    setSelectedRow({ id, name, description, unitOfMeasurement });
+    handlerOpen(true)
+  }
+
+  const handleDialogAccept = async () => {
+    const response = await deleteMaterialType(String(selectedRow.id), token);
     updateTable()
     console.log(response)
     setDialogOpen(false);
@@ -66,9 +76,11 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
 
   const updateTable = async () => {
     const response = await getMaterialTypes(token);
-    setRows(response);
-    // console.log(response)
+    if (response) {
+      setRows(response);
+    }
   }
+
 
   return (
     <div>
@@ -80,6 +92,7 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
         onAccept={handleDialogAccept}
         onCancel={handleDialogCancel}
       />
+      <ModalMaterialType updateTypes={updateTable} materialType={selectedRow}/>
     </div>
   )
 }

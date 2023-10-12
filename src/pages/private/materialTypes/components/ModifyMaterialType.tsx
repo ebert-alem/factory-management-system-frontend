@@ -1,11 +1,11 @@
 import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from "@mui/material";
-import { useSelector } from "react-redux";
-import { AppStore } from "../../../../redux/store";
-import { useEffect, useState } from "react";
-import { CustomBackdropComponent, CustomSelectComponent } from "../../../../components";
+import { MaterialType, UnitOfMeasurement } from "../../../../models";
 import { Close } from "@mui/icons-material";
-import { getUnitsOfMeasurement, registerMaterialType } from "../../../../services";
-import { UnitOfMeasurement } from "../../../../models";
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { CustomBackdropComponent, CustomSelectComponent } from "../../../../components";
+import { AppStore } from "../../../../redux/store";
+import { getUnitsOfMeasurement, modifyMaterialType } from "../../../../services";
 
 const SytledModal = styled(Modal)({
     display: "flex",
@@ -22,27 +22,37 @@ const TypesBox = styled(Box)({
 
 interface ModalTypesProps {
     updateTypes: () => void;
+    materialType: MaterialType;
 }
 
-export const AddMaterialTypes = () => {
+export const ModifyMaterialType = () => {
     const [open, setOpen] = useState(false);
-
+    const [units, setUnits] = useState<UnitOfMeasurement[]>([]);
     const token = useSelector((state: AppStore) => state.user.Token);
 
     const handlerOpen = (value: boolean) => {
         setOpen(value);
     }
 
-    const ModalMaterialType = ({ updateTypes }: ModalTypesProps) => {
-        const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
-        const [units, setUnits] = useState<UnitOfMeasurement[]>([]);
+    useEffect(() => {
+        updateUnitsOfMeasurement();
+    }, []);
 
-        const { CustomSelect, selectedOption } = CustomSelectComponent({ options: units, inputLabel: 'Unidad de medida' })
+    const updateUnitsOfMeasurement = async() => {        
+        const response = await getUnitsOfMeasurement(token);
+        setUnits(response);
+    }
+
+    const ModalMaterialType = ({ updateTypes, materialType }: ModalTypesProps) => {
+        const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
+
+        const { CustomSelect, selectedOption } = CustomSelectComponent({ options: units, inputLabel: 'Unidad de medida', defaultValue: materialType.unitOfMeasurement})
 
         const [typesData, setTypesData] = useState({
-            name: '',
-            description: '',
-            unitOfMeasurement: '',
+            id: materialType.id,
+            name: materialType.name,
+            description: materialType.description,
+            unitOfMeasurement: materialType.unitOfMeasurement,
         })
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,20 +61,9 @@ export const AddMaterialTypes = () => {
 
         const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
             e.preventDefault()
-            
             handlerOpen(true)
             console.log(typesData)
             newTypesOfMaterials()
-        }
-
-        useEffect(() => {
-            updateUnitsOfMeasurement();
-        }, []);
-
-        const updateUnitsOfMeasurement = async() => {        
-            const response = await getUnitsOfMeasurement(token);
-            setUnits(response);
-            // console.log(response)            
         }
 
         useEffect(() => {
@@ -73,7 +72,7 @@ export const AddMaterialTypes = () => {
 
         const newTypesOfMaterials = async () => {
             try {
-                const response = await registerMaterialType(typesData, token)
+                const response = await modifyMaterialType(typesData, token)
                 console.log(response)
             } catch (error) {
                 console.error(error)
@@ -105,7 +104,7 @@ export const AddMaterialTypes = () => {
                     onSubmit={handleSubmit}
                 >
                     <Typography variant="h5" color="gray" textAlign="center">
-                        Registrar Tipo de Material
+                        Editar: {materialType.name}
                     </Typography>
                     <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />
 
@@ -146,21 +145,14 @@ export const AddMaterialTypes = () => {
                         variant="contained"
                         aria-label="outlined primary button group"
                     >
-                        <Button type='submit' >Registrar</Button>
+                        <Button type='submit' >Modificar</Button>
                         <Button onClick={() => setOpen(false)} sx={{ width: "100px" }}>
                             <Close />
                         </Button>
                     </ButtonGroup>
                 </Box>
             </SytledModal>
-
         )
-
-
-    }
-
-
-
-
+    }   
     return { ModalMaterialType, handlerOpen }
 }

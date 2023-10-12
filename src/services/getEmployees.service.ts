@@ -1,5 +1,4 @@
 import { baseURL } from "../models";
-import { Employee } from "../models/employee.model";
 
 // const baseURL = 'https://factoryapi.hopto.org/api/'
 
@@ -24,15 +23,15 @@ export const getEmployees = async (token: string) => {
     }
 }
 
-export const transformData = (data: Employee[]) => {
-    return data.map((employee) => ({
-        id: employee.id,
-        name: employee.name,
-        lastName: employee.lastName,
-        dni: employee.dni,
-        charge: employee.charge.name,
-        username: employee.user.userName,
-        active: !employee.user.inactive,
-    }));
-};
+// export const transformData = (data: Employee[]) => {
+//     return data.map((employee) => ({
+//         id: employee.id,
+//         name: employee.name,
+//         lastName: employee.lastName,
+//         dni: employee.dni,
+//         charge: employee.charge.name,
+//         username: employee.user.userName,
+//         inactive: employee.user.inactive,
+//     }));
+// };
 
