@@ -14,13 +14,15 @@ export const Users = () => {
     setUpdate(!update)
   }
   
+  
+  
   return (
     <div className="users">
       <div className="info">
         <Typography variant="h4">Usuarios</Typography>
         <Button onClick={() => handlerOpen(true)} variant="text" size="small" color="primary" startIcon={<PersonAdd />}>Nuevo usuario</Button>
       </div>
-      <ModalUser updateUsers={updateUsers}/>
+      <ModalUser updateUsers={updateUsers}/ >
       <DataTableUsers update={update}/>
       
     </div>

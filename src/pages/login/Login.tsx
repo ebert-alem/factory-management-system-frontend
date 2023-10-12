@@ -68,13 +68,11 @@ export const Login = () => {
 			}
 		} catch (error) {
 			console.error(error)
-			var alert = {
+			setAlert({
 				severity: 'error',
 				isOpen: true,
 				text: 'Usuario o contraseña incorrectos',
-			}
-			setAlert(alert)
-
+			})
 			handlerOpen(false)
 		}
 	}
@@ -129,7 +127,7 @@ export const Login = () => {
 						</Paper>
 					</Grid>
 				</Grid>
-				<CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { alert.isOpen = false}} />
+				<CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { setAlert((alert) => ({ ...alert, isOpen: false })); }} />
 			</Container>
 		</div>
 	)

@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { AppStore } from '../../../../redux/store';
 import { CustomBackdropComponent, CustomSelectComponent } from '../../../../components';
 import { getCharges } from '../../../../services/getCharges.service';
+import { CustomAlert } from '../../../../components/customAlert';
 
 const SytledModal = styled(Modal)({
   display: "flex",
@@ -26,6 +27,11 @@ interface ModalUserProps {
 
 export const AddUser = () => {
   const [open, setOpen] = useState(false);
+  const [alert, setAlert] = useState({
+    severity: "success" | "info" | "warning" | "error",
+    isOpen: false,
+    text: '',
+  })
 
   const token = useSelector((state: AppStore) => state.user.Token);
 
@@ -60,7 +66,9 @@ export const AddUser = () => {
     }
 
     const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.stopPropagation()
       e.preventDefault()
+
       handlerOpen(true)
       // console.log(userData)
       newUser()
@@ -84,13 +92,27 @@ export const AddUser = () => {
     const newUser = async () => {
       try {
         const response = await registerUser(userData, token)
-        console.error(response)
+        console.log(response)
+        setAlert({
+          severity: 'success',
+          isOpen: true,
+          text: 'Usuario registrado con exito',
+        })
+        console.log("llega aca")
+        updateUsers()
+
       } catch (error) {
+        console.log("catch")
+        setAlert({
+          severity: 'error',
+          isOpen: true,
+          text: 'Error al registrar usuario : ' + (error as Error).message,
+        })
+        console.log(alert.isOpen)
+      
         console.error(error)
       } finally {
-        updateUsers()
-        handlerOpen(false)
-        setOpen(false)
+        
       }
     }
 
@@ -220,7 +242,10 @@ export const AddUser = () => {
               <Close />
             </Button>
           </ButtonGroup>
+          <CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { setAlert((alert) => ({ ...alert, isOpen: false })); }} />
+
         </Box>
+
       </SytledModal>
 
     )
