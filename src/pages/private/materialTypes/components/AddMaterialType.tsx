@@ -6,6 +6,7 @@ import { CustomBackdropComponent, CustomSelectComponent } from "../../../../comp
 import { Close } from "@mui/icons-material";
 import { getUnitsOfMeasurement, registerMaterialType } from "../../../../services";
 import { UnitOfMeasurement } from "../../../../models";
+import { CustomAlert } from "../../../../components/customAlert";
 
 const SytledModal = styled(Modal)({
     display: "flex",
@@ -26,6 +27,11 @@ interface ModalTypesProps {
 
 export const AddMaterialTypes = () => {
     const [open, setOpen] = useState(false);
+    const [alert, setAlert] = useState({
+        severity: '',
+        isOpen: false,
+        text: '',
+    })
 
     const token = useSelector((state: AppStore) => state.user.Token);
 
@@ -36,7 +42,7 @@ export const AddMaterialTypes = () => {
     const ModalMaterialType = ({ updateTypes }: ModalTypesProps) => {
         const { CustomBackdrop, handlerOpen } = CustomBackdropComponent()
         const [units, setUnits] = useState<UnitOfMeasurement[]>([]);
-
+    
         const { CustomSelect, selectedOption } = CustomSelectComponent({ options: units, inputLabel: 'Unidad de medida' })
 
         const [typesData, setTypesData] = useState({
@@ -50,6 +56,7 @@ export const AddMaterialTypes = () => {
         }
 
         const handleSubmit = (e: React.ChangeEvent<HTMLInputElement>) => {
+            e.stopPropagation()
             e.preventDefault()
             
             handlerOpen(true)
@@ -75,12 +82,25 @@ export const AddMaterialTypes = () => {
             try {
                 const response = await registerMaterialType(typesData, token)
                 console.log(response)
+
+                setAlert({
+                    severity: 'success',
+                    isOpen: true,
+                    text: 'Tipo de material registrado correctamente'
+                })
+                
             } catch (error) {
+
+                setAlert({
+                    severity: 'error',
+                    isOpen: true,
+                    text: 'Error al registrar tipo de material : '+ (error as Error).message
+                })
+                console.log(alert.isOpen)
                 console.error(error)
             } finally {
                 updateTypes()
-                handlerOpen(false)
-                setOpen(false)
+
             }
         }
 
@@ -151,6 +171,7 @@ export const AddMaterialTypes = () => {
                             <Close />
                         </Button>
                     </ButtonGroup>
+                    <CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { setAlert((alert) => ({ ...alert, isOpen: false })); }} />
                 </Box>
             </SytledModal>
 

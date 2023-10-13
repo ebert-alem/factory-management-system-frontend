@@ -6,6 +6,7 @@ import { CustomBackdropComponent, CustomSelectComponent } from "../../../../comp
 import { MaterialTypeInfo } from "../../../../models";
 import { getMaterialTypes, registerMaterial } from "../../../../services";
 import { Close } from "@mui/icons-material";
+import { CustomAlert } from "../../../../components/customAlert";
 
 const SytledModal = styled(Modal)({
     display: "flex",
@@ -28,6 +29,11 @@ export const AddMaterial = () => {
     const token = useSelector((state: AppStore) => state.user.Token);
     const [open, setOpen] = useState(false);
     const [materialTypes, setMaterialTypes] = useState<MaterialTypeInfo[]>([]);
+    const [alert, setAlert] = useState({
+        severity: '',
+        isOpen: false,
+        text: '',
+    })
 
     const handlerOpen = (value: boolean) => { setOpen(value) }
 
@@ -78,14 +84,24 @@ export const AddMaterial = () => {
                 }
 
                 await registerMaterial(materialFields, token)                
-                // Devuelve el objeto creado, ningun mensaje.
+                setAlert({
+                    severity: "success",
+                    isOpen: true,
+                    text: 'Material registrado con éxito'
+                })
+            
 
             } catch (error) {
+                setAlert({
+                    severity: "error",
+                    isOpen: true,
+                    text: 'Error al registrar material : '+ (error as Error).message
+                })
                 console.error(error)
+
             } finally {
                 updateMaterials()
                 handlerOpen(false)
-                setOpen(false)
             }
         }
 
@@ -219,7 +235,9 @@ export const AddMaterial = () => {
                             <Close />
                         </Button>
                     </ButtonGroup>
+                    <CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { setAlert((alert) => ({ ...alert, isOpen: false })); }} />
                 </Box>
+
             </SytledModal>
         )
     }

@@ -5,7 +5,8 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { CustomBackdropComponent, CustomSelectComponent } from "../../../../components";
 import { AppStore } from "../../../../redux/store";
-import { getUnitsOfMeasurement, modifyMaterialType } from "../../../../services";
+import { getMaterialTypes, getUnitsOfMeasurement, modifyMaterialType } from "../../../../services";
+import { CustomAlert } from "../../../../components/customAlert";
 
 const SytledModal = styled(Modal)({
     display: "flex",
@@ -28,6 +29,11 @@ interface ModalTypesProps {
 export const ModifyMaterialType = () => {
     const [open, setOpen] = useState(false);
     const [units, setUnits] = useState<UnitOfMeasurement[]>([]);
+    const [alert, setAlert] = useState({
+        severity: '',
+        isOpen: false,
+        text: '',
+    })
     const token = useSelector((state: AppStore) => state.user.Token);
 
     const handlerOpen = (value: boolean) => {
@@ -73,13 +79,27 @@ export const ModifyMaterialType = () => {
         const newTypesOfMaterials = async () => {
             try {
                 const response = await modifyMaterialType(typesData, token)
-                console.log(response)
+                setTypesData({
+                    id: response.id,
+                    name: response.name,
+                    description: response.description,
+                    unitOfMeasurement: response.unitOfMeasurement,
+                })
+                setOpen(false)
+
+
             } catch (error) {
                 console.error(error)
+                setAlert({
+                    severity: "error",
+                    isOpen: true,
+                    text: 'Error al modificar el tipo de material : '+(error as Error).message
+                })
+
             } finally {
                 updateTypes()
                 handlerOpen(false)
-                setOpen(false)
+
             }
         }
 
@@ -150,6 +170,7 @@ export const ModifyMaterialType = () => {
                             <Close />
                         </Button>
                     </ButtonGroup>
+                    <CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { setAlert((alert) => ({ ...alert, isOpen: false })); }} />
                 </Box>
             </SytledModal>
         )

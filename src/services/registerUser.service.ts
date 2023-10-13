@@ -26,10 +26,10 @@ export const registerUser = async (fields: UserFields, token: string) => {
       return data;
     } else {
       const error = await response.json();
-      return error.message;
+      throw error;
     }
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
