@@ -79,20 +79,14 @@ export const ModifyMaterialType = () => {
         const newTypesOfMaterials = async () => {
             try {
                 const response = await modifyMaterialType(typesData, token)
-                console.log(response)
-                setAlert({
-                    severity: "success",
-                    isOpen: true,
-                    text: 'Tipo de material modificado con éxito'
-                })
                 setTypesData({
                     id: response.id,
                     name: response.name,
                     description: response.description,
                     unitOfMeasurement: response.unitOfMeasurement,
                 })
-                console.log(typesData)
-                handleInputChange
+                setOpen(false)
+
 
             } catch (error) {
                 console.error(error)
