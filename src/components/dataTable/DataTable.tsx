@@ -6,7 +6,7 @@ type Props = {columns: GridColDef[], rows: any[]}
 
 export const DataTable = (props: Props) => {
     return (
-        <Box className='dataTable'>
+        <Box className='dataTable' sx={{display: 'table', tableLayout:'fixed', width:'100%'}}>
             <DataGrid
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 className='dataGrid'
@@ -26,13 +26,15 @@ export const DataTable = (props: Props) => {
                         quickFilterProps: { debounceMs: 500 },
                     }
                 }}
-                pageSizeOptions={[5, 10]}                
+                pageSizeOptions={[5, 7, 10, 15]}                
                 disableRowSelectionOnClick
                 disableColumnFilter
                 disableColumnSelector
                 disableColumnMenu
+                
                 loading={props.rows.length === 0}
-                sx={{ minHeight: 450 }}
+                sx={{ minHeight: 450, backgroundColor: 'info.main', border: 'none' }}
+                
             />
         </Box>
     )

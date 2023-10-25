@@ -2,7 +2,10 @@
 @import "../../styles/responsive.scss";
 
 .menu {
-    padding-bottom: 40px;
+    @include lg {
+        width: 45px;
+    }
+    
     .item {
         display: flex;
         flex-direction: column;
@@ -14,7 +17,7 @@
         .title {
             font-size: 12px;
             font-weight: 200;
-            color: $soft-color;
+            // color: $soft-color;
             
              @include lg {
                  display: none;
@@ -28,8 +31,9 @@
             padding: 10px;
 
             &:hover {
-                background-color: $soft-bg;
-                border-radius: 5px;
+                background-color: rgba(94, 94, 94, 0.13);
+                border-radius: 8px;
+                
             }
 
              .listItemTitle {

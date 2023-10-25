@@ -28,7 +28,7 @@ interface ModalTypesProps {
 export const AddMaterialTypes = () => {
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({
-        severity: '',
+        severity: 'success',
         isOpen: false,
         text: '',
     })
@@ -124,7 +124,7 @@ export const AddMaterialTypes = () => {
                     component="form"
                     onSubmit={handleSubmit}
                 >
-                    <Typography variant="h5" color="gray" textAlign="center">
+                    <Typography variant="h5" color="primary" textAlign="center">
                         Registrar Tipo de Material
                     </Typography>
                     <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />

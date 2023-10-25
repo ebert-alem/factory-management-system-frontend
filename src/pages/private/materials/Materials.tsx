@@ -1,5 +1,5 @@
 import { Button, Typography } from "@mui/material"
-import { AddCircleOutlineRounded } from "@mui/icons-material"
+import { AddCircle } from "@mui/icons-material"
 import { DataTableMaterials } from "./components/DataTableMaterial"
 import { AddMaterial } from "."
 import { useState } from "react"
@@ -11,15 +11,17 @@ export const Materials = () => {
   const updateMaterials = () => {
     setMaterials(!updateMaterial)
   }
-  
+
   return (
     <div className="materialTypes">
       <div className="info">
         <Typography variant="h4">Materiales</Typography>
-        <Button onClick={() => handlerOpen(true)} variant="text" size="small" color="primary" startIcon={<AddCircleOutlineRounded />}>Nuevo Material</Button>
+        <Button onClick={() => handlerOpen(true)} variant="text" size="large" color="primary" startIcon={<AddCircle />}>
+          <Typography variant="body1" sx={{ display: { xs: "none", sm: "flex" } }}>Nuevo Material</Typography>
+        </Button>
       </div>
-      <ModalMaterial updateMaterials={updateMaterials}/>
-      <DataTableMaterials update={updateMaterial}/>
+      <ModalMaterial updateMaterials={updateMaterials} />
+      <DataTableMaterials update={updateMaterial} />
     </div>
   )
 }

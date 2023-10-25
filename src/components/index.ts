@@ -1,4 +1,5 @@
 export * from './backdropCharge';
+export * from './customAlert';
 export * from './customDialog';
 export * from './customSelect';
 export * from './dataTable/DataTable';

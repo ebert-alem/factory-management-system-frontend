@@ -1,27 +1,33 @@
 import { useState } from "react";
 import "./MaterialTypes.scss"
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { AddMaterialTypes } from "./components/AddMaterialType";
-import { AddCircleOutlineRounded } from "@mui/icons-material";
+import { AddCircle } from "@mui/icons-material";
 import { DataTableTypesOfMaterials } from "./components/DataTableMaterialTypes";
 
 export const MaterialTypes = () => {
   const { ModalMaterialType, handlerOpen } = AddMaterialTypes()
-  const [update, setUpdate]   = useState(false);
+  const [update, setUpdate] = useState(false);
 
-  const updateTypes = () => { 
+  const updateTypes = () => {
     setUpdate(!update)
   }
-  
+
   return (
     <div className="materialTypes">
       <div className="info">
-        <Typography variant="h4">Tipos de Maleriales</Typography>
-        <Button onClick={() => handlerOpen(true)} variant="text" size="small" color="primary" startIcon={<AddCircleOutlineRounded />}>Nuevo Tipo de Material</Button>
+        <Box display='flex' justifyContent='space-between' width='100%' borderRadius={2}>
+          <Typography variant="h4">Tipos de Maleriales</Typography>
+          <Button onClick={() => handlerOpen(true)} variant="text" size="large" color="primary" startIcon={<AddCircle />}>
+            <Typography variant="body1" sx={{ display: { xs: "none", sm: "flex" } }}>Nuevo Tipo</Typography>
+          </Button>
+        </Box>
       </div>
-      <ModalMaterialType updateTypes={updateTypes}/>
-      <DataTableTypesOfMaterials update={update}/>
-      
+      <ModalMaterialType updateTypes={updateTypes} />
+      <Box borderRadius={2}>
+        <DataTableTypesOfMaterials update={update} />
+      </Box>
+
     </div>
   )
 }

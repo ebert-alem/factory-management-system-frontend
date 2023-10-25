@@ -7,6 +7,7 @@ import { MaterialType } from "../../../../models";
 import { deleteMaterialType, getMaterialTypes } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
 import { ModifyMaterialType } from "./ModifyMaterialType";
+import { IconButton } from "@mui/material";
 
 export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
@@ -40,8 +41,8 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
         const unitOfMeasurement = params.row.unitOfMeasurement;
         return (
           <div className="actions">
-            <button onClick={() => handleModify(id, name, description, unitOfMeasurement)} className="edit"><EditRounded /></button>
-            <button onClick={() => handleDelete(id, name)} className="delete">{<DeleteRounded />}</button>
+            <IconButton onClick={() => handleModify(id, name, description, unitOfMeasurement)} size="small" ><EditRounded /></IconButton>
+            <IconButton onClick={() => handleDelete(id, name)} size="small" >{<DeleteRounded />}</IconButton>
           </div>
         )
       }
@@ -86,7 +87,7 @@ export const DataTableTypesOfMaterials = ({ update }: { update: boolean }) => {
     <div>
       <DataTable columns={columns} rows={rows} />
       <CustomDialog
-        title={`Eliminar ${selectedRow.name}`}
+        title={`Eliminar: ${selectedRow.name}`}
         text="Esta accion no se puede deshacer, ¿Desea continuar?"
         isOpen={dialogOpen}
         onAccept={handleDialogAccept}

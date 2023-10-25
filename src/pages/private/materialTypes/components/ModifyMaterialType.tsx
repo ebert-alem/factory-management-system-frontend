@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { CustomBackdropComponent, CustomSelectComponent } from "../../../../components";
 import { AppStore } from "../../../../redux/store";
-import { getMaterialTypes, getUnitsOfMeasurement, modifyMaterialType } from "../../../../services";
+import { getUnitsOfMeasurement, modifyMaterialType } from "../../../../services";
 import { CustomAlert } from "../../../../components/customAlert";
 
 const SytledModal = styled(Modal)({
@@ -30,7 +30,7 @@ export const ModifyMaterialType = () => {
     const [open, setOpen] = useState(false);
     const [units, setUnits] = useState<UnitOfMeasurement[]>([]);
     const [alert, setAlert] = useState({
-        severity: '',
+        severity: 'success',
         isOpen: false,
         text: '',
     })
@@ -123,7 +123,7 @@ export const ModifyMaterialType = () => {
                     component="form"
                     onSubmit={handleSubmit}
                 >
-                    <Typography variant="h5" color="gray" textAlign="center">
+                    <Typography variant="h5" color="primary" textAlign="center">
                         Editar: {materialType.name}
                     </Typography>
                     <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />

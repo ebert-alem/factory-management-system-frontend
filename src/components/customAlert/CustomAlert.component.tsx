@@ -12,9 +12,9 @@ export const CustomAlert = ({ severity, text, isOpen, onClose }: CustomAlertProp
 
     return (
         <Snackbar open={isOpen} autoHideDuration={6000} onClose={onClose}>
-        <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
-          {text}
-        </Alert>
+            <Alert onClose={onClose} severity={severity} sx={{ width: '100%' }}>
+                {text}
+            </Alert>
         </Snackbar>
     )
 }

@@ -15,20 +15,19 @@
 
   .main{
     font-family: 'Roboto', sans-serif;
-    background-color: $main-bg;
-    color: $main-color;
     
   }
 
   .container{
     display: flex;
-    
+    height: 100%;
   }
 
   .menuContainer{
     width: 250px;
+    // background-color: $main-bg;
     padding: 5px 20px;
-    border-right: 2px solid $soft_bg;
+    // border-right: 2px solid $soft_bg;
     @include sm {
       display: flex;
     }
@@ -38,7 +37,6 @@
   .contentContainer{
     padding: 20px 20px;
     width: 100%;
-    background-color: $soft_bg;
   }
 
   .footerContainer{

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { menuAdmin, menuUser } from '../../data'
+import { menuMaterialUser, menuMaterial } from '../../data'
 import './menu.scss'
 import { useSelector } from 'react-redux'
 import { AppStore } from '../../redux/store'
@@ -9,9 +9,8 @@ export const Menu = () => {
 
   const switchMenu = () => {
     const userState = useSelector((store: AppStore) => store.user);
-    return userState.Charge === "admin" ? menuAdmin : menuUser
+    return userState.Charge === "admin" ? menuMaterial : menuMaterialUser
   }
-
 
   return (
     <div className='menu'>
@@ -20,7 +19,7 @@ export const Menu = () => {
           <span className='title'>{item.title}</span>
           {item.listItems.map(listItem => (
             <Link to={listItem.url} className='listItem' key={listItem.title}>
-              <img src={listItem.icon} className="icon" alt="" />
+              {listItem.icon}
               <span className='listItemTitle'>{listItem.title}</span>
             </Link>
           ))}

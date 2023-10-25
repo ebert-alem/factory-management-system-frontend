@@ -2,7 +2,7 @@ import { Route, useNavigate } from "react-router-dom"
 import { RoutesWithNotFound } from "../../utilities"
 import { PrivateRoutes, PublicRoutes } from "../../models"
 import { Home, Materials, MaterialTypes, Users } from "."
-import { Layout } from "../../components/layout"
+import { LayoutMaterial } from "../../components/layout"
 import RolGuard from "../../guards/rol.guard"
 import { useEffect } from "react"
 import { isTokenExpired } from "../../services"
@@ -28,12 +28,14 @@ export const Private = () => {
 
     return (
         <RoutesWithNotFound>
-            <Route path="/" element={<Layout />}>
+            <Route path="/" element={<LayoutMaterial />}>
                 <Route path="/" element={<Home />} />
                 <Route element={<RolGuard />}>
                     <Route path={PrivateRoutes.MATERIALS} element={<Materials />} />
                     <Route path={PrivateRoutes.USERS} element={<Users />} />
-                    <Route path={PrivateRoutes.TYPEOFMATERIALS} element={<MaterialTypes />} />                 
+                    <Route path={PrivateRoutes.TYPEOFMATERIALS} element={<MaterialTypes />} />   
+                    {/* <Route path={PrivateRoutes.PRODUCTS} element={<Products />} />
+                    <Route path={PrivateRoutes.ADDPRODUCT} element={<AddProduct />} />                                */}
                 </Route>
                 <Route path="*" element={<h2>404 Not Found</h2>} />
             </Route>
