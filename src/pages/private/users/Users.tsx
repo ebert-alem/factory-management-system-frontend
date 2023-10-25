@@ -1,6 +1,6 @@
-import { Box, Button, Typography } from "@mui/material"
+import { Button, Typography } from "@mui/material"
 import "./users.scss"
-import { AddCircle, AddCircleOutlineRounded, PersonAdd } from "@mui/icons-material";
+import { AddCircle } from "@mui/icons-material";
 import { AddUser } from "./components/AddUser";
 import { DataTableUsers } from "./components/DataTableUsers";
 import { useState } from "react";

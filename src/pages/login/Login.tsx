@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { loginUser, logoutUser } from '../../services';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createUser, resetUser, UserKey } from '../../redux/states/user';
+import { createUser, resetUser} from '../../redux/states/user';
 import { clearLocalStorage } from '../../utilities';
 import { PrivateRoutes, PublicRoutes } from '../../models';
 import { CustomBackdropComponent } from '../../components/backdropCharge';
