@@ -30,7 +30,7 @@ export const AddMaterial = () => {
     const [open, setOpen] = useState(false);
     const [materialTypes, setMaterialTypes] = useState<MaterialTypeInfo[]>([]);
     const [alert, setAlert] = useState({
-        severity: '',
+        severity: 'success',
         isOpen: false,
         text: '',
     })

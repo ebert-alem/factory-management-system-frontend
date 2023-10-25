@@ -28,7 +28,7 @@ interface ModalTypesProps {
 export const AddMaterialTypes = () => {
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState({
-        severity: '',
+        severity: 'success',
         isOpen: false,
         text: '',
     })
