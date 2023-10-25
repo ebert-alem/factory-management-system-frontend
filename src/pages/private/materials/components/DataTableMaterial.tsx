@@ -105,7 +105,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
     <div>
       <DataTable columns={columns} rows={rows} />
       <CustomDialog
-        title={`Eliminar ${selectedRow.name}`}
+        title={`Eliminar: ${selectedRow.name}`}
         text="Esta accion no se puede deshacer, ¿Desea continuar?"
         isOpen={dialogOpen}
         onAccept={handleDialogAccept}
