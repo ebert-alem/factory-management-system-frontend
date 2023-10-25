@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { deleteMaterial, getMaterials } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
 import { MaterialInfo } from "../../../../models";
+import { IconButton } from "@mui/material";
 
 export const DataTableMaterials = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
@@ -33,7 +34,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
     {
       field: 'stock',
       headerName: 'Stock',
-      width: 100,
+      width: 60,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.stock || ''} ${params.row.stock ? params.row.materialType.unitOfMeasurement.symbol : '-'}`,
     },
@@ -47,7 +48,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
     {
       field: 'unitOfMeasurement',
       headerName: 'Unidad',
-      width: 150,
+      width: 100,
       valueGetter: (params: GridValueGetterParams) =>
         `${params.row.materialType.unitOfMeasurement.name || ''}`,
     },
@@ -64,8 +65,8 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
         const name = params.row.name;
         return (
           <div className="actions">
-            <button className="edit"><EditRounded /></button>
-            <button onClick={() => handleDelete(id, name)} className="delete">{<DeleteRounded />}</button>
+            <IconButton size="small"><EditRounded /></IconButton>
+            <IconButton onClick={() => handleDelete(id, name)} size="small" >{<DeleteRounded />}</IconButton>
           </div>
         )
       }

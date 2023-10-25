@@ -28,7 +28,7 @@ interface ModalUserProps {
 export const AddUser = () => {
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState({
-    severity: "success" | "info" | "warning" | "error",
+    severity: "success",
     isOpen: false,
     text: '',
   })
@@ -136,7 +136,7 @@ export const AddUser = () => {
           component="form"
           onSubmit={handleSubmit}
         >
-          <Typography variant="h5" color="gray" textAlign="center">
+          <Typography variant="h5" color="primary" textAlign="center">
             Registrar Usuario
           </Typography>
           <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />
@@ -145,7 +145,7 @@ export const AddUser = () => {
             <Typography variant="button" textAlign="center">
               Datos de Usuario
             </Typography>
-            <Box sx={{ display: 'flex', justifyContent: "space-around" }}>
+            <Box sx={{ display: 'flex', justifyContent: "space-around" }} gap={4}>
               <TextField
                 name='userName'
                 margin='normal'
@@ -178,7 +178,7 @@ export const AddUser = () => {
             <Typography variant="button" textAlign="center" paddingTop={2}>
               Datos de empleado
             </Typography>
-            <Box sx={{ display: 'flex', justifyContent: "space-around" }}>
+            <Box sx={{ display: 'flex', justifyContent: "space-around" }} gap={4}>
               <TextField
                 name='name'
                 size='small'

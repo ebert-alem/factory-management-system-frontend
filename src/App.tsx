@@ -11,16 +11,20 @@ import AuthGuard from './guards/auth.guard';
 import { PrivateRoutes, PublicRoutes } from './models';
 import { Suspense, lazy } from 'react';
 import { RoutesWithNotFound } from './utilities';
-import { Box, CircularProgress } from '@mui/material';
-
+import { Box, CircularProgress, ThemeProvider } from '@mui/material';
+import { lightTheme, darkTheme } from './styles/theme';
 
 const Login = lazy(() => import('./pages/login/Login'));
 const Private = lazy(() => import('./pages/private/Private'));
 
 export const App = () => {
- 
+  const getTheme = () => {
+    const storedTheme = localStorage.getItem('theme');
+    return storedTheme === 'dark' ? darkTheme : lightTheme;
+};
   return (
-    <Suspense fallback={<Box sx={{ height: '100vh', backgroundColor: "#1f1f1f", display: 'flex', justifyContent: 'center', alignItems: 'center' }}><CircularProgress /></Box>}>
+    <ThemeProvider theme={getTheme()}>
+    <Suspense fallback={<Box sx={{ height: '100vh', backgroundColor: "background.default", display: 'flex', justifyContent: 'center', alignItems: 'center' }}><CircularProgress /></Box>}>
       <Provider store={store}>
         <BrowserRouter>
           <RoutesWithNotFound>
@@ -33,5 +37,6 @@ export const App = () => {
         </BrowserRouter>
       </Provider>
     </Suspense>
+    </ThemeProvider>
   )
 }

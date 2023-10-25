@@ -121,7 +121,7 @@ export const AddMaterial = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box
-                    width={{ xs: "auto", md: "auto" }}
+                    width={{ xs: 400, md: 500 }}
                     height="auto"
                     bgcolor={"background.default"}
                     color={"text.primary"}
@@ -133,7 +133,7 @@ export const AddMaterial = () => {
                     component="form"
                     onSubmit={handleSubmit}
                 >
-                    <Typography variant="h5" color="gray" textAlign="center">
+                    <Typography variant="h5" color="primary" textAlign="center">
                         Registrar Material
                     </Typography>
                     <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />

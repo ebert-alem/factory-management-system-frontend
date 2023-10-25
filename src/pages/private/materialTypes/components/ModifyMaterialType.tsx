@@ -123,7 +123,7 @@ export const ModifyMaterialType = () => {
                     component="form"
                     onSubmit={handleSubmit}
                 >
-                    <Typography variant="h5" color="gray" textAlign="center">
+                    <Typography variant="h5" color="primary" textAlign="center">
                         Editar: {materialType.name}
                     </Typography>
                     <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />

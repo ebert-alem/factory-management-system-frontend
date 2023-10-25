@@ -6,6 +6,7 @@ import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { CustomDialog, DataTable } from "../../../../components";
 import { useEffect, useState } from "react";
 import { Employee } from "../../../../models";
+import { IconButton } from "@mui/material";
 
 export const DataTableUsers = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
@@ -49,13 +50,13 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
       valueGetter: (params: GridValueGetterParams) => params.row.user.inactive ? false : true,
     },
     {
-      field: 'actions', headerName: 'Acción', width: 100, sortable: false, renderCell: (params) => {
+      field: 'actions', headerName: 'Acción', width: 100, sortable: false, disableExport: true, renderCell: (params) => {
         const userId = params.row.user.id;
         const userName = params.row.user.userName;
         return (
           <div className="actions">
-            <button className="edit"><EditRounded /></button>
-            <button onClick={() => handleDisable(userId, userName, !params.row.user.inactive)} className="delete">{params.row.user.inactive ? <RestorePageRounded /> : <DeleteRounded />}</button>
+            <IconButton size="small"><EditRounded /></IconButton>
+            <IconButton onClick={() => handleDisable(userId, userName, !params.row.user.inactive)} size="small">{params.row.user.inactive ? <RestorePageRounded /> : <DeleteRounded />}</IconButton>
           </div>
         )
       }

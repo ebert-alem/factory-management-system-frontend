@@ -1,7 +1,7 @@
-import { MenuRounded } from "@mui/icons-material";
-import { AppBar, Avatar, Box, IconButton, Menu, MenuItem, Toolbar, Typography, styled } from "@mui/material"
+import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import { Avatar, Box, Divider, IconButton, Menu, MenuItem, Stack, Toolbar, Typography, styled } from "@mui/material"
 import { clearLocalStorage } from "../../../utilities";
-import { UserKey, resetUser } from "../../../redux/states/user";
+import { resetUser } from "../../../redux/states/user";
 import { PublicRoutes } from '../../../models';
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,8 +15,7 @@ const StyledToolbar = styled(Toolbar)({
     paddingLeft: '20px',
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: '#1f1f1f',
-
+    height: '64px',
 });
 
 const Logo = styled(Box)(() => ({
@@ -31,8 +30,12 @@ const Logo = styled(Box)(() => ({
     }
 }));
 
+interface NavbarProps {
+    toggleTheme: () => void;
+    mode: string;
+}
 
-export const NavbarMaterial = () => {
+export const NavbarMaterial = ({ toggleTheme, mode }: NavbarProps) => {
 
     const token = useSelector((state: AppStore) => state.user.Token);
 
@@ -44,16 +47,15 @@ export const NavbarMaterial = () => {
             await logoutUser(token);
         } catch (error) {
             console.error(error);
+        } finally {   
+            clearLocalStorage('user');
+            dispatch(resetUser());
+            navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
+            window.location.reload();
         }
-
-        clearLocalStorage(UserKey);
-        dispatch(resetUser());
-        navigate(`/${PublicRoutes.LOGIN}`, { replace: true });
-        handleClose();
     }
 
-    const [anchorEl, setAnchorEl] = useState
-    <null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -62,40 +64,37 @@ export const NavbarMaterial = () => {
         setAnchorEl(null);
     };
 
-
-
     return (
-        <AppBar position="sticky">
-            <StyledToolbar disableGutters>
-                {/* <IconButton size="small" color="default" sx={{ display: { xs: "flex", sm: "none" } }}> */}
-                <MenuRounded fontSize="large" sx={{ display: { xs: "flex", sm: "none" } }} />
-                {/* </IconButton> */}
+        <Stack position="sticky">
+            <StyledToolbar sx={{ backgroundColor: "background.paper", borderRadius: 2.5, margin: 1.5}} disableGutters>
                 <Logo>
-                    <IconButton >
+                    <IconButton>
                         <img src="/bravaLogo.png" alt="logo" />
                     </IconButton>
                     <Typography variant="h6" sx={{ color: "#3c72ff", display: { xs: "none", sm: "flex" } }}>
                         BRAVA STOCKS
                     </Typography>
                 </Logo>
+                <Box gap={1} display='flex' alignItems='center' >
+                    <IconButton onClick={() => toggleTheme()}>{ mode === 'dark' ? <LightModeOutlined color="primary"/> : <DarkModeOutlined color="primary"/>}</IconButton>
+                    <Divider orientation="vertical" flexItem variant="middle"/>
+                    <IconButton onClick={handleClick}>
+                        <Avatar sx={{ backgroundColor: "primary.main", width: 30, height: 30 }} />
+                    </IconButton>
+                </Box>
 
-                <IconButton onClick={handleClick}>
-                    <Avatar sx={{ backgroundColor: "#3c72ff", width: 30, height: 30 }} />
-                </IconButton>
                 <Menu
                     id="basic-menu"
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
-                    MenuListProps={{
-                        'aria-labelledby': 'basic-button',
-                    }}
+                    MenuListProps={{ 'aria-labelledby': 'basic-button' }}
                 >
                     <MenuItem onClick={handleClose}>Perfil</MenuItem>
                     <MenuItem onClick={logOut}>Cerrar sesión</MenuItem>
                 </Menu>
 
             </StyledToolbar>
-        </AppBar>
+        </Stack>
     )
 }
