@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Divider, Modal, TextField, Typography, styled } from "@mui/material";
+import { Box, Button, ButtonGroup, Divider, InputAdornment, Modal, TextField, Typography, styled } from "@mui/material";
 import { Material, MaterialTypeInfo } from "../../../../models";
 import { Close } from "@mui/icons-material";
 import { useState, useEffect } from "react";
@@ -60,6 +60,7 @@ export const ModifyMaterial = () => {
             id: material.id,
             name: material.name,
             description: material.description,
+            price: material.price,
             materialTypeId: material.materialTypeId,
             stock: material.stock,
             repositionPoint: material.repositionPoint,
@@ -87,6 +88,7 @@ export const ModifyMaterial = () => {
                     id: response.id,
                     name: response.name,
                     description: response.description,
+                    price: response.price,
                     materialTypeId: response.materialTypeId,
                     stock: response.stock,
                     repositionPoint: response.repositionPoint,
@@ -109,6 +111,15 @@ export const ModifyMaterial = () => {
 
             }
         }
+        
+        const handleInputNumber = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            const { name, value } = event.target;     
+            const regex = new RegExp(/^\d+(\.\d{0,2})?$/);
+
+            if (regex.test(value) || value === "") {
+                setMaterialData({ ...materialData, [name]: parseFloat(value) });
+            }
+        };
 
         return (
 
@@ -135,19 +146,42 @@ export const ModifyMaterial = () => {
                     </Typography>
                     <Divider sx={{ marginTop: "10px", marginBottom: "30px" }} />
 
-                    <MaterialBox >
-                        <TextField
-                            name='name'
-                            margin='normal'
-                            label="Nombre tipo de material"
-                            size='small'
-                            inputProps={{
-                                maxLength: 30
-                            }}
-                            required
-                            onChange={handleInputChange}
-                            value={materialData.name}
-                        />
+                    <MaterialBox>
+                        
+                        <Typography variant="button" textAlign="center" >
+                            Datos de Material
+                        </Typography>
+                        <Box display={'flex'} justifyContent={'space-around'} gap={4}>
+                            <TextField
+                                name='name'
+                                margin='normal'
+                                fullWidth
+                                label="Nombre de material"
+                                size='small'
+                                inputProps={{
+                                    maxLength: 30
+                                }}
+                                required
+                                onChange={handleInputChange}
+                                value={materialData.name}
+                            />
+                            
+                            <TextField
+                                name='price'
+                                fullWidth
+                                type="text"
+                                size='small'
+                                margin='normal'
+                                label="Precio"
+                                value={materialData.price}
+                                inputProps={{ maxLength: 10 }}
+                                InputProps={{
+                                    startAdornment:
+                                        <InputAdornment position="start">$</InputAdornment>
+                                }}
+                                onChange={handleInputNumber}
+                            />
+                        </Box>
                         <TextField
                             name='description'
                             inputProps={{
@@ -158,13 +192,46 @@ export const ModifyMaterial = () => {
                             margin='normal'
                             label="Descripción"
                             onChange={handleInputChange}
-                            value={materialData.description}
                         />
 
+                        <Typography variant="button" textAlign="center" marginTop={2}>
+                            Datos de tipo de Material
+                        </Typography>
                         <Box sx={{ display: 'flex', justifyContent: "space-around" }}>
                             <CustomSelect />
                         </Box>
+
+                        <Typography variant="button" textAlign="center" marginTop={2} >
+                            Datos de Stock
+                        </Typography>
+                        <Box display={"flex"} justifyContent={"space-around"} gap={4} >
+                            <TextField
+                                name='stock'
+                                fullWidth
+                                inputProps={{
+                                    maxLength: 8
+                                }}
+                                size='small'
+                                margin='normal'
+                                label="Stock"                                
+                                onChange={handleInputNumber}
+                                value={materialData.stock}
+                            />
+                            <TextField
+                                name='repositionPoint'
+                                fullWidth
+                                inputProps={{
+                                    maxLength: 8
+                                }}
+                                value={materialData.repositionPoint}
+                                size='small'
+                                margin='normal'
+                                label="Punto reposicion"
+                                onChange={handleInputNumber}
+                            />
+                        </Box>
                     </MaterialBox>
+
 
                     <CustomBackdrop />
                     <ButtonGroup
