@@ -17,7 +17,7 @@ export const MaterialTypes = () => {
     <div className="materialTypes">
       <div className="info">
         <Box display='flex' justifyContent='space-between' width='100%' borderRadius={2}>
-          <Typography variant="h4">Tipos de Maleriales</Typography>
+          <Typography variant="h4">Tipos de Materiales</Typography>
           <Button onClick={() => handlerOpen(true)} variant="text" size="large" color="primary" startIcon={<AddCircle />}>
             <Typography variant="body1" sx={{ display: { xs: "none", sm: "flex" } }}>Nuevo Tipo</Typography>
           </Button>

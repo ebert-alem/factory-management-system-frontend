@@ -5,6 +5,7 @@ export interface Material {
     name: string;
     description: string;
     materialTypeId: number;
+    materialTypeName: string;
     price: number;
     stock: number;
     repositionPoint: number;
