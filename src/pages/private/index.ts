@@ -5,5 +5,7 @@ export * from './materialTypes';
 export * from './materials/components/AddMaterial';
 export * from './materials/components/DataTableMaterial';
 export * from './materials';
+export * from './products/components';
+export * from './products';
 export * from './users/components';
 export * from './users';

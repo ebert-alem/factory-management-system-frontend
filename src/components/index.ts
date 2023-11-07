@@ -2,6 +2,7 @@ export * from './backdropCharge';
 export * from './customAlert';
 export * from './customDialog';
 export * from './customSelect';
+export * from './customStepper';
 export * from './dataTable/DataTable';
 export * from './footer/Footer';
 export * from './layout';
