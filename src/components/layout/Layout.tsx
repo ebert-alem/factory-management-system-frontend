@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import { Menu } from "../menu/Menu"
 import { Footer } from "../footer/Footer"
-import { Box, List, Stack, ThemeProvider } from "@mui/material"
+import { Box, Stack, ThemeProvider } from "@mui/material"
 import { NavbarMaterial } from "./navbar/NavbarMaterial"
 import { CssBaseline } from '@mui/material';
 import { useState } from "react"
@@ -36,10 +36,10 @@ export const LayoutMaterial = () => {
                             height: '100%',
                         }}
                     >
-                        <List sx={{
+                        <Box sx={{
                             width: { lg: "250px" },
-                            // height: { sm: "560px",lg: "100%" },
-                            // overflowY: "scroll",
+                            // maxHeight: {lg:'88vh'},
+                            // overflowY: {lg:"auto"},
                             scrollbarwidth: 'thin',
                             '&::-webkit-scrollbar': {
                                 width: '0.4em',
@@ -50,7 +50,7 @@ export const LayoutMaterial = () => {
                             },
                             '&::-webkit-scrollbar-thumb': {
                                 borderRadius: '5px',
-                                background: '#5858587a'                                
+                                                              
                             },
                             '&::-webkit-scrollbar-thumb:hover': {
                                 background: '#5858587a'
@@ -60,7 +60,7 @@ export const LayoutMaterial = () => {
                             <Box sx={{ marginLeft: { lg: '20px', sm: '10px' }, marginRight: { lg: '15px', sm: '10px' } }}>
                                 <Menu />
                             </Box>
-                        </List>
+                        </Box>
                         <Stack
                             sx={{
                                 width: '100%',

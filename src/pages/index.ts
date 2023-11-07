@@ -6,5 +6,7 @@ export * from './private/materialTypes';
 export * from './private/materials/components/AddMaterial';
 export * from './private/materials/components/DataTableMaterial';
 export * from './private/materials';
+export * from './private/products/components';
+export * from './private/products';
 export * from './private/users/components';
 export * from './private/users';

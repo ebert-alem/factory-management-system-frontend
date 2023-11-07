@@ -32,7 +32,7 @@ export const menuMaterial = [
       },
       {
         id: 3,
-        title: "Tipos de Materiales",
+        title: "Tipo Material",
         url: "materialTypes",
         icon: <ApiOutlined />,
       },

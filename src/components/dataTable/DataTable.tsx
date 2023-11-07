@@ -2,7 +2,7 @@ import { DataGrid, GridColDef, GridToolbar, esES } from '@mui/x-data-grid'
 import './dataTable.scss'
 import { Box } from '@mui/material'
 
-type Props = {columns: GridColDef[], rows: any[]}
+type Props = {columns: GridColDef[], rows: any[], rowHeight?: number}
 
 export const DataTable = (props: Props) => {
     return (
@@ -34,7 +34,7 @@ export const DataTable = (props: Props) => {
                 
                 loading={props.rows.length === 0}
                 sx={{ minHeight: 450, backgroundColor: 'info.main', border: 'none' }}
-                
+                {...props.rowHeight && { rowHeight: props.rowHeight }}
             />
         </Box>
     )
