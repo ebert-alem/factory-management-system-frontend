@@ -1,7 +1,5 @@
 import { baseURL } from "../models";
 
-// const baseURL = 'https://factoryapi.hopto.org/api/'
-
 export const getEmployees = async (token: string) => {
     try {
         const response = await fetch(baseURL + "employee", {

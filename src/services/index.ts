@@ -8,6 +8,8 @@ export * from './getEmployees.service';
 export * from './getMaterialTypes.service';
 export * from './getMaterials.service';
 export * from './getProducts.service';
+export * from './modifyEmployee.service';
+export * from './modifyMaterial.service';
 export * from './modifyMaterialType.service';
 export * from './registerAssignation.service';
 export * from './registerCharge.service';

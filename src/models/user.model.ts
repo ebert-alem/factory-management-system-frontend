@@ -6,6 +6,7 @@ export interface UserInfo {
 
 export interface User {
     id: number;
-    userName: string;
-    inactive: boolean;
+    username: string;
+    password?: string;
+    inactive?: boolean;
 }
