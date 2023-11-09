@@ -188,6 +188,7 @@ export const ModifyMaterial = () => {
                                 maxLength: 150
                             }}
                             size='small'
+                            value={materialData.description}
                             multiline
                             margin='normal'
                             label="Descripción"

@@ -211,7 +211,7 @@ export const AddUser = () => {
                 inputProps={{
                   pattern: "[0-9]*",
                   inputMode: 'numeric',
-                  maxLength: 8,
+                  maxLength: 9,
                   minLength: 7
                 }}
                 margin='normal'
