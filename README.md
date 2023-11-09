@@ -1,4 +1,4 @@
 # factory-management-system-frontend
 
 #### Deploy Netlify:
-https://factory-07-login.netlify.app/
+https://brava-stock-management-system-v2.netlify.app/
