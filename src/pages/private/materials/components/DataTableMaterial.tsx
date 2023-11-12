@@ -47,7 +47,7 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
       headerName: 'Reposición',
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-        `${params.row.repositionPoint || ''} ${params.row.stock ? params.row.materialType.unitOfMeasurement.symbol : '-'}`,
+        `${params.row.repositionPoint || ''} ${params.row.repositionPoint ? params.row.materialType.unitOfMeasurement.symbol : '-'}`,
     },
     {
       field: 'unitOfMeasurement',

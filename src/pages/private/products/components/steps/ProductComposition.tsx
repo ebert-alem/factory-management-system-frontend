@@ -94,7 +94,7 @@ export const ProductComposition = () => {
                 }}
               />
             </Box>
-            <Button fullWidth variant='outlined' size='small' onClick={() => handleDeleteMaterial(index)}><Delete /></Button>
+            <Button fullWidth variant='outlined' size='small' disabled={selectedMaterials.length === 1} onClick={() => handleDeleteMaterial(index)}><Delete /></Button>
           </Box>
         ))}
       </Box>

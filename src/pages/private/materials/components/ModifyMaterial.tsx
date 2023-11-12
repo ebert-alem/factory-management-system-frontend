@@ -117,7 +117,7 @@ export const ModifyMaterial = () => {
             const regex = new RegExp(/^\d+(\.\d{0,2})?$/);
 
             if (regex.test(value) || value === "") {
-                setMaterialData({ ...materialData, [name]: parseFloat(value) });
+                setMaterialData({ ...materialData, [name]: value === "" ? 0 : parseFloat(value) });
             }
         };
 
