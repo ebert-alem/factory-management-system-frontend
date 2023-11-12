@@ -94,6 +94,7 @@ export const ProductData = () => {
                     />
                     <TextField
                         name='stock'
+                        disabled
                         margin='normal'
                         label="Stock"
                         size='small'

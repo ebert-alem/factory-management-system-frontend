@@ -214,6 +214,7 @@ export const AddUser = () => {
                   maxLength: 9,
                   minLength: 7
                 }}
+                fullWidth
                 margin='normal'
                 label="DNI"
                 required

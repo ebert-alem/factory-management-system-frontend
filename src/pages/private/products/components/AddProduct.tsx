@@ -67,7 +67,6 @@ export const ModalProduct = ({ updateProducts, open, handlerOpen }: ModalProduct
             })
 
             setSuccess(true)
-
             updateProducts();
 
         } catch (error) {

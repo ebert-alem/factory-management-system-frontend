@@ -119,7 +119,7 @@ export const DataTableUsers = ({ update }: { update: boolean }) => {
     <div>
       <DataTable columns={columns} rows={rows} />
       <CustomDialog
-        title={`${selectedRow.inactive ? 'Desactivar' : 'Habilitar'} al usuario ${selectedRow.name}`}
+        title={`${selectedRow.inactive ? 'Desactivar' : 'Habilitar'} al usuario ${selectedRow.userName}`}
         text={`${selectedRow.inactive ? 'Se suspendera' : 'Se restaurará'} su acceso al sistema, ¿Desea continuar?`}
         isOpen={dialogOpen}
         onAccept={handleDialogAccept}
