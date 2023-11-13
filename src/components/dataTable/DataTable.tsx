@@ -2,7 +2,7 @@ import { DataGrid, GridColDef, GridToolbar, esES } from '@mui/x-data-grid'
 import './dataTable.scss'
 import { Box } from '@mui/material'
 
-type Props = {columns: GridColDef[], rows: any[], rowHeight?: number}
+type Props = {columns: GridColDef[], rows: any[], rowHeight?: number, filter?: boolean}
 
 export const DataTable = (props: Props) => {
     return (
@@ -28,7 +28,7 @@ export const DataTable = (props: Props) => {
                 }}
                 pageSizeOptions={[5, 7, 10, 15]}                
                 disableRowSelectionOnClick
-                disableColumnFilter
+                disableColumnFilter={!props.filter}
                 disableColumnSelector
                 disableColumnMenu
                 
