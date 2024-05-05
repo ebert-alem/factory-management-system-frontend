@@ -17,9 +17,9 @@ export const FinalStep = ({ success }: FinalStepProps) => {
             name: '',
             description: '',
             color: '',
-            size: '',
+            // size: '',
             price: '',
-            stock: '',
+            // stock: '',
             imageUrl: '',
         });
     }

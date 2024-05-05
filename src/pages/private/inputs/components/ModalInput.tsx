@@ -71,7 +71,6 @@ export const ModalInput = ({ updateInputs, open, handlerOpen }: ModalIncomeProps
                             <Close />
                         </IconButton>
                     </Box>
-
                 </Box>
                 <Divider sx={{ mb: 1 }} />
                 
@@ -83,7 +82,7 @@ export const ModalInput = ({ updateInputs, open, handlerOpen }: ModalIncomeProps
                 )}
 
                 {selectedButton === 'materiales' && <InputMaterials updateInputs={updateInputs} resetSelectedOption={resetSelectedButton} handleAlert={handleAlert}/>}
-                {selectedButton === 'productos' && <InputProducts />}
+                {selectedButton === 'productos' && <InputProducts updateInputs={updateInputs} resetSelectedOption={resetSelectedButton} handleAlert={handleAlert}/>}
                 
                 <CustomAlert severity={alert.severity as unknown as "success" | "info" | "warning" | "error"} text={alert.text} isOpen={alert.isOpen} onClose={() => { setAlert((alert) => ({ ...alert, isOpen: false })); }} />
             </Box>

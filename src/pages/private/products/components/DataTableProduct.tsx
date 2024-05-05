@@ -3,17 +3,17 @@ import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
 import { useEffect, useState } from "react";
-import { MaterialType } from "../../../../models";
 import { deleteProduct, getProducts } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
 import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
+import { ModalProductDetails } from "..";
 
 export const DataTableProducts = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
-  const [rows, setRows] = useState<MaterialType[]>([]);
+  const [rows, setRows] = useState<any>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({ id: '', name: ''});
-  
+  const [selectedRow, setSelectedRow] = useState({ id: 0, name: ''});
+  const [openDetails, setOpenDetails] = useState(false);
   const [expandedImage, setExpandedImage] = useState('');
 
   const handleImageClick = (imageUrl: string) => {
@@ -81,7 +81,7 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
         // const unitOfMeasurement = params.row.unitOfMeasurement;
         return (
           <div className="actions">
-            <IconButton size="small" >{<Visibility />}</IconButton>
+            <IconButton size="small" onClick={handleDetails(id)}>{<Visibility />}</IconButton>
             <IconButton size="small" ><EditRounded /></IconButton>
             <IconButton onClick={() => handleDelete(id, name)} size="small" >{<DeleteRounded />}</IconButton>
           </div>
@@ -90,7 +90,7 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
     },
   ];
 
-  const handleDelete = (id: string, name: string) => {
+  const handleDelete = (id: number, name: string) => {
     setSelectedRow({...selectedRow, id, name });
     setDialogOpen(true);
   }
@@ -99,6 +99,12 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
   //   setSelectedRow({ id, name, description, unitOfMeasurement });
   //   // handlerOpen(true)
   // }
+
+  const handleDetails = (id: number) => () => {
+    setSelectedRow({ ...selectedRow, id });
+    console.log(id)
+    setOpenDetails(true);
+  }
 
   const handleDialogAccept = async () => {
     await deleteProduct(String(selectedRow.id), token);
@@ -121,7 +127,6 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
     }
   }
 
-
   return (
     <div>
       <DataTable columns={columns} rows={rows} rowHeight={100} />
@@ -139,6 +144,7 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
           </DialogContent>
         </Dialog>
       )}
+      <ModalProductDetails productId={selectedRow.id} handlerOpen={setOpenDetails} open={openDetails} />
     </div>
   )
 }

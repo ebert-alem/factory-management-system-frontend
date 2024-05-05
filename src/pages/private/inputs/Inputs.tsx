@@ -1,7 +1,7 @@
 import { AddCircle } from "@mui/icons-material"
 import { Box, Button, Typography } from "@mui/material"
 import { useState } from "react";
-import { ModalInput } from ".";
+import { DataTableInputs, ModalInput } from ".";
 
 export const Inputs = () => {
     const [update, setUpdate] = useState(false);
@@ -21,7 +21,7 @@ export const Inputs = () => {
                     <Typography variant="body1" sx={{ display: { xs: "none", sm: "flex" } }}>Nuevo Ingreso</Typography>
                 </Button>
             </Box>
-            {/* <DataTableIncomes update={update} /> */}
+            <DataTableInputs update={update} />
             <ModalInput updateInputs={updateInputs} open={open} handlerOpen={handlerOpen} />
         </Box>
     )

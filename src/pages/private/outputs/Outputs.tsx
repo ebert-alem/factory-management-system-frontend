@@ -1,7 +1,7 @@
 import { AddCircle } from "@mui/icons-material"
 import { Box, Button, Typography } from "@mui/material"
 import { useState } from "react";
-import { ModalOutput } from ".";
+import { DataTableOutputs, ModalOutput } from ".";
 
 export const Outputs = () => {
     const [update, setUpdate] = useState(false);
@@ -21,7 +21,7 @@ export const Outputs = () => {
                     <Typography variant="body1" sx={{ display: { xs: "none", sm: "flex" } }}>Nuevo Egreso</Typography>
                 </Button>
             </Box>
-            {/* <DataTableIncomes update={update} /> */}
+            <DataTableOutputs update={update} />
             <ModalOutput updateOutputs={updateOutputs} open={open} handlerOpen={handlerOpen} />
         </Box>
     )

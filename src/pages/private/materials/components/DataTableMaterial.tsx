@@ -75,14 +75,14 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
       filterable: true,
       width: 100,
       valueGetter: (params: GridValueGetterParams) =>
-        params.row.stock < params.row.repositionPoint,
+        params.row.stock <= params.row.repositionPoint,
       renderCell: (params: GridCellParams) => {
         const stock = params.row.stock as number;
         const repositionPoint = params.row.repositionPoint as number;
         const missing = repositionPoint - stock;
         return (
           <Box>
-            {stock < repositionPoint ?
+            {stock <= repositionPoint ?
               <Badge badgeContent={missing} color="warning">
                 <ReportProblemRounded color="error" />
               </Badge>
@@ -94,14 +94,14 @@ export const DataTableMaterials = ({ update }: { update: boolean }) => {
         {
           value: 'true',
           label: 'Con Faltante',
-          getApplyFilterFn: (item) => {
+          getApplyFilterFn: (_) => {
             return (params: GridCellParams) => params.value === true;
           },
         },
         {
           value: 'false',
           label: 'Sin Faltante',
-          getApplyFilterFn: (item) => {
+          getApplyFilterFn: (_) => {
             return (params: GridCellParams) => params.value === false;
           },
         },

@@ -39,9 +39,9 @@ export const ModalProduct = ({ updateProducts, open, handlerOpen }: ModalProduct
         try {
             const productField = {
                 ...productData,
-                size: Number(productData.size),
+                // size: Number(productData.size),
                 price: Number(productData.price),
-                stock: Number(productData.stock),
+                // stock: Number(productData.stock),
             }
             const data = await registerProduct(productField, token)
             console.log(data)

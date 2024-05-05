@@ -205,6 +205,10 @@ export const AddMaterial = () => {
                                 }}
                                 size='small'
                                 margin='normal'
+                                InputProps={{
+                                    endAdornment:
+                                        <InputAdornment position="end">{ selectedOption && 'm' }</InputAdornment>
+                                }}
                                 label="Stock"                                
                                 onChange={handleInputNumber}
                                 value={materialData.stock}
@@ -214,6 +218,10 @@ export const AddMaterial = () => {
                                 fullWidth
                                 inputProps={{
                                     maxLength: 8
+                                }}
+                                InputProps={{
+                                    endAdornment:
+                                        <InputAdornment position="end">{ selectedOption && 'm' }</InputAdornment>
                                 }}
                                 value={materialData.repositionPoint}
                                 size='small'

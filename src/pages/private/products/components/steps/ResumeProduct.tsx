@@ -6,9 +6,9 @@ export interface Product {
     name: string;
     description: string;
     color: string;
-    size: string;
+    //size: string;
     price: string;
-    stock: string;
+    //stock: string;
     imageUrl: string;
 }
 
@@ -42,18 +42,18 @@ export const ResumeProduct = ({ newProduct }: ResumeProductProps) => {
                         <Typography variant="button">Color:</Typography>
                         <Typography ml={1}>{productData.color}</Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} display='flex'>
+                    {/* <Grid item xs={12} sm={6} display='flex'>
                         <Typography variant="button">Numero:</Typography>
                         <Typography ml={1}>{productData.size}</Typography>
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} sm={6} display='flex'>
                         <Typography variant="button">Precio:</Typography>
-                        <Typography ml={1}>{productData.price}</Typography>
+                        <Typography ml={1}>{'$' + productData.price}</Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} display='flex'>
+                    {/* <Grid item xs={12} sm={6} display='flex'>
                         <Typography variant="button">Stock:</Typography>
                         <Typography ml={1}>{productData.stock}</Typography>
-                    </Grid>
+                    </Grid> */}
                 </Grid>
                 {selectedMaterials.length > 0 &&
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>

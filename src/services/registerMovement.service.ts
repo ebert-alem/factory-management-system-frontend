@@ -4,12 +4,15 @@ type MovementField = {
     employeeId: number;
     type: string;
     details: MovementDetailField[];
+    isMaterialMovement?: boolean;
   };
 
 type MovementDetailField = {
-    materialId: number;
+    materialId?: number;
+    productId?: number;
     quantity: number;
-    price?: number;
+    number?: number;
+    //price?: number;
   };
   
   export const registerMovement = async (fields: MovementField, token: string) => {

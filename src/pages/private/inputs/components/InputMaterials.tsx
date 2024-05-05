@@ -64,7 +64,7 @@ export const InputMaterials = ({ updateInputs, resetSelectedOption, handleAlert 
     };
 
     const handleDeleteMaterial = (index: number) => {
-        if ( selectedMaterials.length === 1 ) {
+        if (selectedMaterials.length === 1) {
             return;
         }
         const nuevosMateriales = [...selectedMaterials];
@@ -118,7 +118,7 @@ export const InputMaterials = ({ updateInputs, resetSelectedOption, handleAlert 
     }
 
     return (
-        <Box height='70vh' id='step-2' component='form' onSubmit={handleSubmit}>
+        <Box height='70vh' id='imputMaterials' component='form' onSubmit={handleSubmit}>
             <Box sx={{ overflowY: 'auto', height: '64vh', padding: 1 }} alignItems='center'>
                 <Typography variant='h5' mb={2}>Materiales</Typography>
                 <Box bgcolor='background.default' borderRadius={2.5}>
@@ -150,13 +150,13 @@ export const InputMaterials = ({ updateInputs, resetSelectedOption, handleAlert 
                                     fullWidth
                                     inputProps={{
                                         maxLength: 8
-                                    }}                                    
+                                    }}
                                 />
                             </Box>
                             <Box alignItems='center' display='flex' justifyContent='space-between'>
-                                <Typography marginLeft={1} variant='body1'>{ material.name ? `Stock actual: ${material?.stock} ${material?.symbol}` : 'Seleccione material'}</Typography>
+                                <Typography marginLeft={1} variant='body1'>{material.name ? `Stock actual: ${material?.stock} ${material?.symbol}` : 'Seleccione material'}</Typography>
                                 <Button variant='outlined' disabled={selectedMaterials.length === 1} size='small' onClick={() => handleDeleteMaterial(index)}><Delete /></Button>
-                            </Box>                        
+                            </Box>
                         </Box>
                     ))}
                 </Box>
@@ -183,7 +183,6 @@ export const InputMaterials = ({ updateInputs, resetSelectedOption, handleAlert 
                     {'¿Desea confirmar el siguiente ingreso?'}
                 </DialogTitle>
                 <DialogContent sx={{ overflowY: 'auto', maxHeight: '400px' }}>
-
                     {selectedMaterials.length > 0 &&
                         <Box sx={{ overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
                             <Table sx={{ backgroundColor: 'info.main', borderRadius: 2.5 }} aria-label="simple table">

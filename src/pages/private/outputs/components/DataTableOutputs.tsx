@@ -7,14 +7,12 @@ import { getMovements } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
 import { MaterialInfo } from "../../../../models";
 import { IconButton } from "@mui/material";
-import { ModalInputDetails } from ".";
 
-export const DataTableInputs = ({ update }: { update: boolean }) => {
+export const DataTableOutputs = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
   const [rows, setRows] = useState<MaterialInfo[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState({ id: 0, number: '', description: '', total: 0, datetime: '' });
-  const [openDetails, setOpenDetails] = useState(false);
 
   const columns: GridColDef[] = [
     {
@@ -49,7 +47,7 @@ export const DataTableInputs = ({ update }: { update: boolean }) => {
 
         return (
           <div className="actions">
-            <IconButton size="small" onClick={handlerDetails(id)}>{<Visibility />}</IconButton>
+            <IconButton size="small" >{<Visibility />}</IconButton>
             <IconButton onClick={() => handleCancel(id, number)} size="small" >{<BackspaceRounded />}</IconButton>
           </div>
         )
@@ -60,12 +58,6 @@ export const DataTableInputs = ({ update }: { update: boolean }) => {
   const handleCancel = (id: number, number: string) => {
     setSelectedRow({ ...selectedRow, id, number });
     setDialogOpen(true);
-  }
-
-  const handlerDetails = (id: number) => () => {
-    setSelectedRow({ ...selectedRow, id });
-    console.log(id)
-    setOpenDetails(true);
   }
 
   const handleDialogAccept = async () => {
@@ -84,7 +76,8 @@ export const DataTableInputs = ({ update }: { update: boolean }) => {
   }, [update]);
 
   const updateTable = async () => {
-    const response = await getMovements('input', token);
+    const response = await getMovements('output', token);
+    console.log(response)
     if (response) {
       setRows(response);
     }
@@ -100,7 +93,7 @@ export const DataTableInputs = ({ update }: { update: boolean }) => {
         onAccept={handleDialogAccept}
         onCancel={handleDialogCancel}
       />
-      <ModalInputDetails movementId={selectedRow.id} handlerOpen={setOpenDetails} open={openDetails}/>
+      {/* <ModalMaterial updateMaterial={updateTable} material={selectedRow}/> */}
     </div>
   )
 }

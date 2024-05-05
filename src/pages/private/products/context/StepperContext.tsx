@@ -5,18 +5,18 @@ export const StepperContext = createContext<{
     name: string;
     description: string;
     color: string;
-    size: string;
+    //size: string;
     price: string;
-    stock: string;
+    //stock: string;
     imageUrl: string;
   };
   setProductData: React.Dispatch<React.SetStateAction<{
     name: string;
     description: string;
     color: string;
-    size: string;
+    //size: string;
     price: string;
-    stock: string;
+    //stock: string;
     imageUrl: string;
   }>>;
   selectedMaterials: any[];
@@ -28,9 +28,9 @@ export const StepperContext = createContext<{
     name: '',
     description: '',
     color: '',
-    size: '',
+    //size: '',
     price: '',
-    stock: '',
+    //stock: '',
     imageUrl: '',
   },
   setProductData: () => {},

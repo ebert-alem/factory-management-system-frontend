@@ -4,9 +4,9 @@ type ProductField = {
     name: string;
     description: string;
     color: string;
-    size: number;
+    // size: number;
     price: number;
-    stock: number;
+    // stock: number;
     imageUrl: string;
   };
   

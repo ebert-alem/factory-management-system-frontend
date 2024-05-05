@@ -1,13 +1,12 @@
-
 import { baseURL } from "../models";
 
-export const getCharges = async (token: string) => {
-
+export const getProductById = async(id: string, token: string) => {
     try {
-        const response = await fetch(baseURL + "charge", {
+        const response = await fetch(baseURL + "product/" + id, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Auth-Token': token,
+                'Language': 'es'
             },
         })
 
