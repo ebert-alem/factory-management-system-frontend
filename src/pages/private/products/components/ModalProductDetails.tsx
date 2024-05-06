@@ -1,9 +1,9 @@
 import styled from "@emotion/styled";
-import { Box, CircularProgress, Divider, IconButton, Modal, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, CircularProgress, Dialog, DialogContent, Divider, IconButton, Modal, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
 import { useEffect, useState } from "react";
-import { Close } from "@mui/icons-material";
+import { Close, PrintOutlined } from "@mui/icons-material";
 import { getProductById } from "../../../../services";
 
 
@@ -23,14 +23,15 @@ export const ModalProductDetails = ({ open, handlerOpen, productId }: ModalProdu
     const token = useSelector((state: AppStore) => state.user.Token);
     const [product, setProduct] = useState<any>({});
     const [inCharge, setInCharge] = useState(true);
+    const [expandedImage, setExpandedImage] = useState('');
 
+    const handleImageClick = (imageUrl: string) => {
+        setExpandedImage(imageUrl);
+    };
 
-    // const [alert, setAlert] = useState({
-    //     severity: "success",
-    //     isOpen: false,
-    //     text: '',
-    // })
-
+    const handleCloseImage = () => {
+        setExpandedImage('');
+    };
 
     useEffect(() => {
         if (open) {
@@ -73,10 +74,14 @@ export const ModalProductDetails = ({ open, handlerOpen, productId }: ModalProdu
                 display="flex"
                 flexDirection="column"
                 justifyContent="space-between"
+                sx={{ '@media print': { color: 'black' } }}
             >
                 <Box alignItems='center' display='flex' marginBottom={2} justifyContent='space-between'>
-                    <Typography variant="h4" color='primary'>{product.name} {product.color}</Typography>
+                    <Typography variant="h4" color='primary'>Resumen de producto</Typography>
                     <Box display='flex' alignItems='center'>
+                        <IconButton onClick={() => window.print()}>
+                            <PrintOutlined />
+                        </IconButton>
                         <IconButton onClick={() => handleModalClose()}>
                             <Close />
                         </IconButton>
@@ -84,30 +89,65 @@ export const ModalProductDetails = ({ open, handlerOpen, productId }: ModalProdu
                 </Box>
                 <Divider sx={{ mb: 1 }} />
                 {inCharge ?
-                    <Box sx={{display: 'flex', justifyContent: 'center', height: '70vh', alignItems:'center' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', height: '70vh', alignItems: 'center' }}>
                         <CircularProgress color="inherit" />
                     </Box>
                     :
                     <Box component='form' sx={{ overflowY: 'auto', height: '70vh', padding: 1 }}>
-                        <Typography variant='h6' mb={3.5}>Datos de Stock</Typography>
-                        {/* <Grid container rowSpacing={1.5} pl={2} pb={2} borderRadius={2.5} bgcolor='info.main'>
-                        <Grid item xs={6} display='flex'>
-                            <Typography variant="button">Numero:</Typography>
-                            <Typography ml={1}>{movement.id}</Typography>
-                        </Grid>
-                        <Grid item xs={6} display='flex'>
-                            <Typography variant="button">Tipo:</Typography>                            
-                            {movement.id ? (movement.isMaterialMovement ? <Typography ml={1}>Ingreso de Materiales</Typography> : <Typography ml={1}>Ingreso de Productos</Typography>): <Typography ml={1}></Typography>}
-                        </Grid>
-                        <Grid item xs={12} display='flex'>
-                            <Typography variant="button">Descricion:</Typography>
-                            <Typography ml={1}>{movement.description}</Typography>
-                        </Grid>
-                     */}
-                        <Typography variant='h6' mb={3.5}>Composición del producto</Typography>
+                        <Box display='flex' gap={3} sx={{ flexDirection: { sm: 'row', xs: 'column' } }} alignItems={{ sm: 'inherit', xs: 'center' }}>
+                            <Box bgcolor='background.paper' p={2} display='flex' flexDirection='column' borderRadius={2.5} maxWidth='232px'>
+                                <img
+                                    src={product?.imageUrl ? product?.imageUrl : "/noImage.png"}
+                                    alt=""
+                                    style={{ borderRadius: '10px', objectFit: 'cover', width: '200px', cursor: 'zoom-in', }}
+                                    onClick={() => handleImageClick(product?.imageUrl)}
+                                />
+                                <Box display='flex' flexDirection='column' justifyContent='space-between' mt={2}>
+                                    <Typography variant='h6'>{product.name} {product.color}</Typography>
+                                    <Typography variant='caption'>Precio: ${product.price}</Typography>
+                                    <Typography variant='caption'>Stock: {product.stock}</Typography>
+                                    <Typography variant='caption'>Descripción: {product.description}</Typography>
+                                </Box>
+                            </Box>
+
+                            {product.productVariation?.length > 0 ?
+                                <Box sx={{ overflowY: 'auto', display: 'flex', flexDirection: 'column' }} width='100%' alignItems='center'>
+                                    <Table sx={{ backgroundColor: 'background.paper', borderRadius: 2.5 }} aria-label="simple table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Talle</TableCell>
+                                                <TableCell align="right">Stock</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {product.productVariation.map((detail: any, index: number) => (
+                                                detail.stock > 0 &&
+                                                <TableRow
+                                                    key={index}
+                                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                >
+                                                    <TableCell component="th" scope="row">
+                                                        {detail?.number}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {detail?.stock}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </Box>
+                                :
+                                <Box display='flex' justifyContent='center' alignItems='center' mb={2} width='100%'>
+                                    <Typography variant='body1'>Sin Stock registrado</Typography>
+                                </Box>
+                            }
+                        </Box>
+                        <Divider sx={{ mb: 3, mt: 3 }} />
+                        <Typography variant='h6'>Composición del producto</Typography>
                         {product.assignations?.length > 0 ?
-                            <Box sx={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', mt: 3 }}>
-                                <Table sx={{ backgroundColor: 'info.main', borderRadius: 2.5 }} aria-label="simple table">
+                            <Box sx={{ display: 'flex', mt: 2 }}>
+                                <Table sx={{ backgroundColor: 'background.paper', borderRadius: 2.5 }} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
                                             <TableCell>Material</TableCell>
@@ -132,14 +172,22 @@ export const ModalProductDetails = ({ open, handlerOpen, productId }: ModalProdu
                                 </Table>
                             </Box>
                             :
-                            <Box display='flex' justifyContent='center' alignItems='center' m={18}>
+                            <Box display='flex' justifyContent='center' alignItems='center' m={2}>
                                 <Typography variant='body1'>No hay asignaciones</Typography>
                             </Box>
                         }
 
                     </Box>
                 }
+                {expandedImage && (
+                    <Dialog open={!!expandedImage} onClose={handleCloseImage}>
+                        <DialogContent>
+                            <img src={expandedImage} alt="Imagen del producto" style={{ maxWidth: '100%', maxHeight: '100vh', borderRadius: 6 }} />
+                        </DialogContent>
+                    </Dialog>
+                )}
             </Box>
+
 
         </SytledModal>
     );

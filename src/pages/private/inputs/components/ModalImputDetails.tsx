@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Box, CircularProgress, Divider, Grid, IconButton, Modal, Table, TableBody, TableCell, TableHead, TableRow, Typography, styled } from "@mui/material";
-import { Close } from "@mui/icons-material";
+import { Close, PrintOutlined } from "@mui/icons-material";
 import { CustomAlert } from "../../../../components";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
@@ -82,8 +82,11 @@ export const ModalInputDetails = ({ open, handlerOpen, movementId }: ModalIncome
                 justifyContent="space-between"
             >
                 <Box alignItems='center' display='flex' marginBottom={2} justifyContent='space-between'>
-                    {inCharge? <Typography></Typography>: <Typography variant="h4" color='primary'>Ingreso N° {movement.id}</Typography>}
+                    {inCharge ? <Typography></Typography> : <Typography variant="h4" color='primary'>Resumen de ingreso</Typography>}
                     <Box display='flex' alignItems='center'>
+                        <IconButton onClick={() => window.print()}>
+                            <PrintOutlined />
+                        </IconButton>
                         <IconButton onClick={() => handleModalClose()}>
                             <Close />
                         </IconButton>
@@ -97,7 +100,7 @@ export const ModalInputDetails = ({ open, handlerOpen, movementId }: ModalIncome
                     :
                     <Box height='70vh' component='form'>
                         <Typography variant='h6' mb={3.5}>Datos del movimiento</Typography>
-                        <Grid container rowSpacing={1.5} pl={2} pb={2} borderRadius={2.5} bgcolor='info.main'>
+                        <Grid container rowSpacing={1.5} pl={2} pb={2} borderRadius={2.5} bgcolor='background.paper'>
                             <Grid item xs={6} display='flex'>
                                 <Typography variant="button">Numero:</Typography>
                                 <Typography ml={1}>{movement.id}</Typography>
@@ -128,7 +131,7 @@ export const ModalInputDetails = ({ open, handlerOpen, movementId }: ModalIncome
                         {movement.movementDetails?.length > 0 &&
                             (movement.isMaterialMovement as boolean ?
                                 <Box sx={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', height: '64vh', mt: 3 }}>
-                                    <Table sx={{ backgroundColor: 'info.main', borderRadius: 2.5 }} aria-label="simple table">
+                                    <Table sx={{ backgroundColor: 'background.paper', borderRadius: 2.5 }} aria-label="simple table">
                                         <TableHead>
                                             <TableRow>
                                                 <TableCell>Material</TableCell>
