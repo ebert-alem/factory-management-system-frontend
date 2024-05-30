@@ -3,42 +3,37 @@ import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { AppStore } from "../../../../redux/store";
 import { useEffect, useState } from "react";
-import { MaterialType } from "../../../../models";
 import { deleteProduct, getProducts } from "../../../../services";
 import { CustomDialog, DataTable } from "../../../../components";
-import { Box, Dialog, DialogContent, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
+import { ModalProductDetails } from "..";
+
 
 export const DataTableProducts = ({ update }: { update: boolean }) => {
   const token = useSelector((state: AppStore) => state.user.Token);
-  const [rows, setRows] = useState<MaterialType[]>([]);
+  const [rows, setRows] = useState<any>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState({ id: '', name: ''});
-  
-  const [expandedImage, setExpandedImage] = useState('');
-
-  const handleImageClick = (imageUrl: string) => {
-    setExpandedImage(imageUrl);
-  };
-
-  const handleCloseImage = () => {
-    setExpandedImage('');
-  };
+  const [selectedRow, setSelectedRow] = useState({ id: 0, name: '' });
+  const [openDetails, setOpenDetails] = useState(false);
 
   const columns: GridColDef[] = [
     {
       field: 'imageUrl',
       headerName: 'Foto',
       width: 100,
-      renderCell: (params) => (
-        <Box width='100%'>
-          <img
-            src={params?.value}
-            alt=""
-            style={{ width: '100%', borderRadius: '5px', cursor: 'zoom-in', objectFit: 'cover'}}
-            onClick={() => handleImageClick(params.value)}
-          />
-        </Box>
-      ),
+      renderCell: (params) => {
+        const id = params.row.id;
+        return (
+          <Box width='100%'>
+            <img
+              src={params.value ? params?.value : "/noImage.png"}
+              alt=""
+              style={{ width: '100%', borderRadius: '5px', cursor: 'pointer', objectFit: 'cover' }}
+              onClick={handleDetails(id)}
+            />
+          </Box>
+        )
+      },
       align: 'center',
       sortable: false,
     },
@@ -62,11 +57,11 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
     //   headerName: 'Tamaño',
     //   width: 100,
     // },
-    {
-      field: 'stock',
-      headerName: 'Stock',
-      width: 100,
-    },
+    // {
+    //   field: 'stock',
+    //   headerName: 'Stock',
+    //   width: 100,
+    // },
     {
       field: 'price',
       headerName: 'Precio',
@@ -81,7 +76,7 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
         // const unitOfMeasurement = params.row.unitOfMeasurement;
         return (
           <div className="actions">
-            <IconButton size="small" >{<Visibility />}</IconButton>
+            <IconButton size="small" onClick={handleDetails(id)}>{<Visibility />}</IconButton>
             <IconButton size="small" ><EditRounded /></IconButton>
             <IconButton onClick={() => handleDelete(id, name)} size="small" >{<DeleteRounded />}</IconButton>
           </div>
@@ -90,8 +85,8 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
     },
   ];
 
-  const handleDelete = (id: string, name: string) => {
-    setSelectedRow({...selectedRow, id, name });
+  const handleDelete = (id: number, name: string) => {
+    setSelectedRow({ ...selectedRow, id, name });
     setDialogOpen(true);
   }
 
@@ -99,6 +94,12 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
   //   setSelectedRow({ id, name, description, unitOfMeasurement });
   //   // handlerOpen(true)
   // }
+
+  const handleDetails = (id: number) => () => {
+    setSelectedRow({ ...selectedRow, id });
+    console.log(id)
+    setOpenDetails(true);
+  }
 
   const handleDialogAccept = async () => {
     await deleteProduct(String(selectedRow.id), token);
@@ -121,7 +122,6 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
     }
   }
 
-
   return (
     <div>
       <DataTable columns={columns} rows={rows} rowHeight={100} />
@@ -132,13 +132,7 @@ export const DataTableProducts = ({ update }: { update: boolean }) => {
         onAccept={handleDialogAccept}
         onCancel={handleDialogCancel}
       />
-      {expandedImage && (
-        <Dialog open={!!expandedImage} onClose={handleCloseImage}>
-          <DialogContent>
-            <img src={expandedImage} alt="Imagen del producto" style={{ maxWidth: '100%', maxHeight: '100vh', borderRadius: 6 }} />
-          </DialogContent>
-        </Dialog>
-      )}
+      <ModalProductDetails productId={selectedRow.id} handlerOpen={setOpenDetails} open={openDetails} />
     </div>
   )
 }

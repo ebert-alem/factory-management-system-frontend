@@ -1,19 +1,23 @@
 import { baseURL } from "../models";
 
-type ProductField = {
-    name: string;
-    description: string;
-    color: string;
-    // size: number;
-    price: number;
-    // stock: number;
-    imageUrl: string;
+type MovementField = {
+    employeeId: number;
+    type: string;
+    details: MovementDetailField[];
+    isMaterialMovement?: boolean;
+  };
+
+type MovementDetailField = {
+    materialId?: number;
+    productId?: number;
+    quantity: number;
+    number?: number;
+    //price?: number;
   };
   
-  export const registerProduct = async (fields: ProductField, token: string) => {
-  
+  export const registerMovement = async (fields: MovementField, token: string) => {
     try {
-      const response = await fetch(baseURL + 'product', {
+      const response = await fetch(baseURL + 'movement', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -26,10 +26,10 @@ export const CustomDialog = ({ title, text, isOpen, onAccept, onCancel }: Custom
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button color="error" onClick={onAccept} autoFocus>
+                <Button variant="outlined" onClick={onCancel}>Cancelar</Button>
+                <Button color="error" variant="outlined" onClick={onAccept} autoFocus>
                     Aceptar
                 </Button>
-                <Button onClick={onCancel}>Cancelar</Button>
             </DialogActions>
         </Dialog>
     )

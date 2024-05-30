@@ -2,11 +2,11 @@ import { DataGrid, GridColDef, GridToolbar, esES } from '@mui/x-data-grid'
 import './dataTable.scss'
 import { Box } from '@mui/material'
 
-type Props = {columns: GridColDef[], rows: any[], rowHeight?: number}
+type Props = { columns: GridColDef[], rows: any[], rowHeight?: number, filter?: boolean }
 
 export const DataTable = (props: Props) => {
     return (
-        <Box className='dataTable' sx={{display: 'table', tableLayout:'fixed', width:'100%'}}>
+        <Box className='dataTable' sx={{ display: 'table', tableLayout: 'fixed', width: '100%' }}>
             <DataGrid
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 className='dataGrid'
@@ -26,14 +26,14 @@ export const DataTable = (props: Props) => {
                         quickFilterProps: { debounceMs: 500 },
                     }
                 }}
-                pageSizeOptions={[5, 7, 10, 15]}                
+                pageSizeOptions={[5, 7, 10, 15]}
                 disableRowSelectionOnClick
-                disableColumnFilter
+                disableColumnFilter={!props.filter}
                 disableColumnSelector
                 disableColumnMenu
-                
+
                 loading={props.rows.length === 0}
-                sx={{ minHeight: 450, backgroundColor: 'info.main', border: 'none' }}
+                sx={{ minHeight: 450, backgroundColor: 'info.main', border: 'none', '@media print': { color: 'black'}}}
                 {...props.rowHeight && { rowHeight: props.rowHeight }}
             />
         </Box>

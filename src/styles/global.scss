@@ -2,48 +2,50 @@
 @import "responsive.scss";
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-  .main{
-    font-family: 'Roboto', sans-serif;
-    
-  }
+}
 
-  .container{
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
+.main {
+  font-family: 'Roboto', sans-serif;
+
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.menuContainer {
+  width: 250px;
+  // background-color: $main-bg;
+  padding: 5px 20px;
+
+  // border-right: 2px solid $soft_bg;
+  @include sm {
     display: flex;
-    height: 100%;
   }
 
-  .menuContainer{
-    width: 250px;
-    // background-color: $main-bg;
-    padding: 5px 20px;
-    // border-right: 2px solid $soft_bg;
-    @include sm {
-      display: flex;
-    }
-    
-  }
+}
 
-  .contentContainer{
-    padding: 20px 20px;
-    width: 100%;
-  }
+.contentContainer {
+  padding: 20px 20px;
+  width: 100%;
+}
 
-  .footerContainer{
-    height: 100px;
-  }
+.footerContainer {
+  height: 100px;
+}
 
-
-  .icon{
-    filter: $main-icon;
-  }
+.icon {
+  filter: $main-icon;
+}

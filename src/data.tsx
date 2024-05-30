@@ -51,14 +51,14 @@ export const menuMaterial = [
       {
         id: 1,
         title: "Ingreso",
-        url: "productions",
+        url: "inputs",
         icon: <AssignmentReturnedOutlined />,
       },
 
       {
         id: 2,
         title: "Egreso",
-        url: "buys",
+        url: "outputs",
         icon: <AssignmentReturnOutlined />,
       },
     ],
@@ -105,14 +105,14 @@ export const menuMaterialUser = [
       {
         id: 1,
         title: "Ingreso",
-        url: "productions",
+        url: "inputs",
         icon: <AssignmentReturnedOutlined />,
       },
 
       {
         id: 2,
         title: "Egreso",
-        url: "buys",
+        url: "outputs",
         icon: <AssignmentReturnOutlined />,
       },
     ],

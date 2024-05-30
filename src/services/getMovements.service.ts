@@ -1,14 +1,14 @@
-
 import { baseURL } from "../models";
 
-export const getCharges = async (token: string) => {
-
+export const getMovements = async(type: 'input' | 'output', token: string) => {
     try {
-        const response = await fetch(baseURL + "charge", {
+        const response = await fetch(baseURL + "movement/" + type, {
             headers: {
                 'Content-Type': 'application/json',
                 'X-Auth-Token': token,
+                'Language': 'es'
             },
+            
         })
 
         if (response.ok) {

@@ -6,9 +6,9 @@ export const StepperProvider = ({ children }: { children: React.ReactNode }) => 
         name: '',
         description: '',
         color: '',
-        size: '',
+        // size: '',
         price: '',
-        stock: '',
+        // stock: '',
         imageUrl: '',
     });
 
