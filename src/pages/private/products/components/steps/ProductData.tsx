@@ -5,7 +5,9 @@ import { uploadImageToImgbb } from "../../../../../utilities";
 import { AddCircle, RemoveCircle } from "@mui/icons-material";
 
 
-const colors = ['Blanco', 'Negro', 'Rojo', 'Azul', 'Gris', 'Verde', 'Beige', 'Camel', 'Ceniza', 'Marrón']
+const colors = ['Blanco', 'Negro', 'Rojo', 'Azul', 'Gris', 'Verde', 'Beige', 'Camel', 'Ceniza', 'Marrón', 'Plata',
+    'Gris/Rojo', 'Gris/Verde', 'Negro/Rojo', 'Negro/Blanco', 'Azul/Negro'
+]
 
 export const ProductData = () => {
     const { productData, setProductData } = useContext(StepperContext);

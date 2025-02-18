@@ -13,4 +13,4 @@ export const PrivateRoutes = {
   OUTPUTS: 'Outputs'
 };
 
-export const baseURL = 'https://factoryapi.hopto.org/api/'
+export const baseURL = 'http://brava-stocks.eastus.cloudapp.azure.com/api/'
