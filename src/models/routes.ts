@@ -13,4 +13,4 @@ export const PrivateRoutes = {
   OUTPUTS: 'Outputs'
 };
 
-export const baseURL = 'http://brava-stocks.eastus.cloudapp.azure.com/api/'
+export const baseURL = 'https://brava-stocks.eastus.cloudapp.azure.com/api/'
